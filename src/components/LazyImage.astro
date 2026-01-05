@@ -1,0 +1,338 @@
+---
+/**
+ * LAZY IMAGE COMPONENT
+ * Universal image component with lazy loading and WebP optimization.
+ * 
+ * Use this component for ALL images on the site.
+ * 
+ * Features:
+ * - Native lazy loading with IntersectionObserver fallback
+ * - WebP format with PNG/JPG fallback
+ * - Responsive srcset for different screen sizes
+ * - Loading placeholder
+ * - Automatic alt text requirement for accessibility
+ * 
+ * Props:
+ * @param {string} src - Image path (without extension, e.g., "/images/hero")
+ * @param {string} alt - Alt text for accessibility (required)
+ * @param {number} width - Image width in pixels
+ * @param {number} height - Image height in pixels
+ * @param {string} class - Optional CSS classes
+ * @param {boolean} eager - Skip lazy loading (for above-fold images)
+ */
+
+interface Props {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  class?: string;
+  eager?: boolean;
+}
+
+const { 
+  src, 
+  alt, 
+  width, 
+  height, 
+  class: className = '', 
+  eager = false 
+} = Astro.props;
+
+// Generate WebP and fallback image paths
+// Assumes images are stored as both .webp and .jpg/.png
+const webpSrc = src.endsWith('.webp') ? src : `${src}.webp`;
+const fallbackSrc = src.endsWith('.jpg') || src.endsWith('.png') ? src : `${src}.jpg`;
+
+// Generate base path without extension
+const srcBase = src.replace(/\.(webp|jpg|png)$/, '');
+
+// Simple srcset (just the single image - no @2x requirement)
+// If you add @2x files later, uncomment the 2x versions below
+const webpSrcset = `${srcBase}.webp`;
+const fallbackSrcset = `${srcBase}.jpg`;
+
+// Optional: Uncomment these lines if you have @2x versions of your images:
+// const webpSrcset = `${srcBase}.webp 1x, ${srcBase}@2x.webp 2x`;
+// const fallbackSrcset = `${srcBase}.jpg 1x, ${srcBase}@2x.jpg 2x`;
+
+// Determine loading strategy
+const loadingAttr = eager ? 'eager' : 'lazy';
+
+// Generate unique ID for this image instance (for IntersectionObserver)
+const imageId = `img-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<picture class={`lazy-image-wrapper ${className}`} data-image-id={imageId}>
+  <!-- WebP source (modern browsers) -->
+  <source 
+    srcset={webpSrcset}
+    type="image/webp"
+  />
+  
+  <!-- Fallback source (older browsers) -->
+  <source 
+    srcset={fallbackSrcset}
+    type="image/jpeg"
+  />
+  
+  <!-- Main image element -->
+  <img
+    src={fallbackSrc}
+    alt={alt}
+    width={width}
+    height={height}
+    loading={loadingAttr}
+    decoding="async"
+    class={`lazy-image ${className}`}
+    data-lazy-loaded="false"
+  />
+  
+  <!-- Loading placeholder (shown while image loads) -->
+  {!eager && (
+    <div class="lazy-image-placeholder" aria-hidden="true"></div>
+  )}
+</picture>
+
+<style>
+  /* ============================================
+     LAZY IMAGE WRAPPER
+     ============================================ */
+  .lazy-image-wrapper {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    background-color: var(--color-bg-secondary);
+  }
+
+  /* ============================================
+     MAIN IMAGE
+     ============================================ */
+  .lazy-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    opacity: 0;
+    transition: opacity var(--transition-base);
+  }
+
+  /* Image is loaded */
+  .lazy-image[data-lazy-loaded="true"] {
+    opacity: 1;
+  }
+
+  /* For eager-loaded images (above the fold) */
+  .lazy-image[loading="eager"] {
+    opacity: 1;
+  }
+
+  /* ============================================
+     LOADING PLACEHOLDER
+     ============================================ */
+  .lazy-image-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      var(--color-bg-secondary) 0%,
+      var(--color-bg-tertiary) 50%,
+      var(--color-bg-secondary) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Hide placeholder when image is loaded */
+  .lazy-image[data-lazy-loaded="true"] + .lazy-image-placeholder {
+    display: none;
+  }
+
+  /* Shimmer animation for loading state */
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  /* ============================================
+     RESPONSIVE STYLES
+     ============================================ */
+  
+  /* Maintain aspect ratio to prevent layout shift */
+  .lazy-image-wrapper::before {
+    content: '';
+    display: block;
+    /* Aspect ratio is set via width/height attributes on img */
+  }
+
+  /* Ensure images don't exceed container width */
+  .lazy-image {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* ============================================
+     ACCESSIBILITY
+     ============================================ */
+  
+  /* Hide decorative images from screen readers */
+  .lazy-image[alt=""] {
+    role: presentation;
+  }
+
+  /* Reduce motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    .lazy-image {
+      transition: none;
+    }
+    
+    .lazy-image-placeholder {
+      animation: none;
+      background: var(--color-bg-secondary);
+    }
+  }
+</style>
+
+<script>
+  /**
+   * LAZY LOADING WITH INTERSECTIONOBSERVER
+   * 
+   * Modern browsers support native lazy loading (loading="lazy"),
+   * but we add IntersectionObserver as a progressive enhancement
+   * to handle edge cases and provide better control.
+   * 
+   * How it works:
+   * 1. Observer watches for images entering viewport
+   * 2. When image is visible, mark it as loaded
+   * 3. Browser handles the actual loading via native lazy loading
+   * 4. Fade in image when loaded
+   */
+
+  // Check if browser supports IntersectionObserver
+  if ('IntersectionObserver' in window) {
+    
+    /**
+     * Create IntersectionObserver instance
+     * rootMargin: Start loading 50px before image enters viewport
+     * threshold: Trigger when any part of image is visible
+     */
+    const imageObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          // Check if image is intersecting (visible in viewport)
+          if (entry.isIntersecting) {
+            const img = entry.target as HTMLImageElement;
+            
+            // Wait for image to actually load
+            img.addEventListener('load', () => {
+              // Mark image as loaded (triggers fade-in)
+              img.setAttribute('data-lazy-loaded', 'true');
+              
+              // Remove placeholder
+              const wrapper = img.closest('.lazy-image-wrapper');
+              const placeholder = wrapper?.querySelector('.lazy-image-placeholder');
+              if (placeholder) {
+                placeholder.remove();
+              }
+            });
+            
+            // If image is already cached/loaded
+            if (img.complete) {
+              img.setAttribute('data-lazy-loaded', 'true');
+              const wrapper = img.closest('.lazy-image-wrapper');
+              const placeholder = wrapper?.querySelector('.lazy-image-placeholder');
+              if (placeholder) {
+                placeholder.remove();
+              }
+            }
+            
+            // Stop observing this image (performance optimization)
+            observer.unobserve(img);
+          }
+        });
+      },
+      {
+        // Start loading images 50px before they enter viewport
+        rootMargin: '50px 0px',
+        threshold: 0.01,
+      }
+    );
+
+    /**
+     * Observe all lazy images on the page
+     * Skip images with loading="eager" (above the fold)
+     */
+    const lazyImages = document.querySelectorAll(
+      '.lazy-image[loading="lazy"]'
+    );
+    
+    lazyImages.forEach((img) => {
+      imageObserver.observe(img);
+    });
+
+  } else {
+    /**
+     * FALLBACK FOR OLD BROWSERS
+     * If IntersectionObserver is not supported,
+     * just load all images immediately
+     */
+    const allImages = document.querySelectorAll('.lazy-image');
+    allImages.forEach((img) => {
+      img.setAttribute('data-lazy-loaded', 'true');
+      const wrapper = img.closest('.lazy-image-wrapper');
+      const placeholder = wrapper?.querySelector('.lazy-image-placeholder');
+      if (placeholder) {
+        placeholder.remove();
+      }
+    });
+  }
+
+  /**
+   * HANDLE IMAGES ADDED AFTER PAGE LOAD
+   * (Useful for dynamic content, galleries, etc.)
+   * 
+   * If you dynamically add images to the page,
+   * dispatch a custom event to trigger observation:
+   * 
+   * window.dispatchEvent(new CustomEvent('lazyload:refresh'));
+   */
+  window.addEventListener('lazyload:refresh', () => {
+    if ('IntersectionObserver' in window) {
+      const newImages = document.querySelectorAll(
+        '.lazy-image[loading="lazy"][data-lazy-loaded="false"]'
+      );
+      
+      const observer = new IntersectionObserver(
+        (entries, obs) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const img = entry.target as HTMLImageElement;
+              img.addEventListener('load', () => {
+                img.setAttribute('data-lazy-loaded', 'true');
+              });
+              if (img.complete) {
+                img.setAttribute('data-lazy-loaded', 'true');
+              }
+              obs.unobserve(img);
+            }
+          });
+        },
+        {
+          rootMargin: '50px 0px',
+          threshold: 0.01,
+        }
+      );
+      
+      newImages.forEach((img) => observer.observe(img));
+    }
+  });
+</script>
+

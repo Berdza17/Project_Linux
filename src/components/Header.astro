@@ -1,0 +1,408 @@
+---
+/**
+ * HEADER COMPONENT
+ * Main navigation bar with logo, company name, and responsive menu.
+ * 
+ * Features:
+ * - Desktop: Full horizontal navigation
+ * - Mobile: Hamburger menu (< 768px)
+ * - Active link highlighting
+ * - Smooth transitions
+ */
+
+import { siteConfig } from '../config.js';
+
+// Get current page path for active link highlighting
+const currentPath = Astro.url.pathname;
+
+// Navigation links
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/gallery', label: 'Gallery' },
+  { href: '/contact', label: 'Contact' },
+  { href: '/about', label: 'About' },
+];
+---
+
+<header class="header">
+  <div class="container">
+    <div class="header-content">
+      <!-- Logo and Company Name -->
+      <a href="/" class="logo-link" aria-label="Go to homepage">
+        <img 
+          src={siteConfig.logo.path} 
+          alt={siteConfig.logo.alt} 
+          class="logo-image"
+          width="50"
+          height="50"
+        />
+        <span class="company-name">{siteConfig.companyName}</span>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="nav-desktop" aria-label="Main navigation">
+        <ul class="nav-list">
+          {navLinks.map((link) => (
+            <li class="nav-item">
+              <a 
+                href={link.href} 
+                class={`nav-link ${currentPath === link.href ? 'active' : ''}`}
+                aria-current={currentPath === link.href ? 'page' : undefined}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <!-- Mobile Hamburger Button -->
+      <button 
+        class="hamburger" 
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Menu -->
+    <nav 
+      class="nav-mobile" 
+      id="mobile-menu"
+      aria-label="Mobile navigation"
+    >
+      <ul class="nav-mobile-list">
+        {navLinks.map((link) => (
+          <li class="nav-mobile-item">
+            <a 
+              href={link.href} 
+              class={`nav-mobile-link ${currentPath === link.href ? 'active' : ''}`}
+              aria-current={currentPath === link.href ? 'page' : undefined}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  /* ============================================
+     HEADER CONTAINER
+     ============================================ */
+  .header {
+    background-color: var(--color-bg);
+    border-bottom: var(--border-width) var(--border-style) var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: var(--z-sticky);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-16) 0;
+    min-height: 70px;
+  }
+
+  /* ============================================
+     LOGO & COMPANY NAME
+     ============================================ */
+  .logo-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-12);
+    text-decoration: none;
+    transition: opacity var(--transition-fast);
+  }
+
+  .logo-link:hover {
+    opacity: 0.8;
+    text-decoration: none;
+  }
+
+  .logo-link:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+    border-radius: var(--radius-sm);
+  }
+
+  .logo-image {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    display: block;
+  }
+
+  .company-name {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+    white-space: nowrap;
+  }
+
+  /* Hide company name on very small screens */
+  @media (max-width: 480px) {
+    .company-name {
+      display: none;
+    }
+  }
+
+  /* ============================================
+     DESKTOP NAVIGATION
+     ============================================ */
+  .nav-desktop {
+    display: none; /* Hidden on mobile by default */
+  }
+
+  .nav-list {
+    display: flex;
+    align-items: center;
+    gap: var(--space-32);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-item {
+    margin: 0;
+  }
+
+  .nav-link {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text);
+    text-decoration: none;
+    padding: var(--space-8) var(--space-4);
+    position: relative;
+    transition: color var(--transition-fast);
+  }
+
+  .nav-link:hover {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  /* Active link underline */
+  .nav-link.active {
+    color: var(--color-primary);
+  }
+
+  .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-primary);
+  }
+
+  /* ============================================
+     HAMBURGER MENU BUTTON (Mobile)
+     ============================================ */
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: var(--z-sticky);
+  }
+
+  .hamburger:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+    border-radius: var(--radius-sm);
+  }
+
+  .hamburger-line {
+    width: 100%;
+    height: 3px;
+    background-color: var(--color-text);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-base);
+  }
+
+  /* Hamburger animation when menu is open */
+  .hamburger.active .hamburger-line:nth-child(1) {
+    transform: translateY(10.5px) rotate(45deg);
+  }
+
+  .hamburger.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.active .hamburger-line:nth-child(3) {
+    transform: translateY(-10.5px) rotate(-45deg);
+  }
+
+  /* ============================================
+     MOBILE NAVIGATION MENU
+     ============================================ */
+  .nav-mobile {
+    display: block;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height var(--transition-base);
+  }
+
+  .nav-mobile.open {
+    max-height: 400px; /* Adjust based on content */
+  }
+
+  .nav-mobile-list {
+    list-style: none;
+    margin: 0;
+    padding: var(--space-16) 0;
+  }
+
+  .nav-mobile-item {
+    margin: 0;
+  }
+
+  .nav-mobile-link {
+    display: block;
+    padding: var(--space-12) var(--space-8);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text);
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: all var(--transition-fast);
+  }
+
+  .nav-mobile-link:hover {
+    background-color: var(--color-bg-secondary);
+    border-left-color: var(--color-primary);
+    padding-left: var(--space-16);
+    text-decoration: none;
+  }
+
+  .nav-mobile-link.active {
+    color: var(--color-primary);
+    background-color: var(--color-bg-secondary);
+    border-left-color: var(--color-primary);
+    font-weight: var(--font-weight-bold);
+  }
+
+  /* ============================================
+     RESPONSIVE BREAKPOINTS (Mobile-First)
+     ============================================ */
+  
+  /* Tablet and Desktop (768px and up) */
+  @media (min-width: 768px) {
+    /* Show desktop navigation */
+    .nav-desktop {
+      display: block;
+    }
+
+    /* Hide hamburger button */
+    .hamburger {
+      display: none;
+    }
+
+    /* Hide mobile menu */
+    .nav-mobile {
+      display: none;
+    }
+  }
+
+  /* Large desktop improvements */
+  @media (min-width: 1024px) {
+    .nav-list {
+      gap: var(--space-40);
+    }
+
+    .company-name {
+      font-size: var(--font-size-2xl);
+    }
+  }
+</style>
+
+<script>
+  /**
+   * MOBILE MENU TOGGLE
+   * Vanilla JavaScript to handle hamburger menu functionality.
+   * No external libraries required.
+   */
+
+  // Get references to DOM elements
+  const hamburger = document.querySelector('.hamburger');
+  const mobileMenu = document.querySelector('.nav-mobile');
+  const mobileLinks = document.querySelectorAll('.nav-mobile-link');
+
+  /**
+   * Toggle mobile menu open/closed
+   */
+  function toggleMenu() {
+    // Toggle 'active' class on hamburger (for animation)
+    hamburger?.classList.toggle('active');
+    
+    // Toggle 'open' class on mobile menu (for sliding)
+    mobileMenu?.classList.toggle('open');
+    
+    // Update aria-expanded attribute for accessibility
+    const isExpanded = hamburger?.getAttribute('aria-expanded') === 'true';
+    hamburger?.setAttribute('aria-expanded', String(!isExpanded));
+  }
+
+  /**
+   * Close mobile menu
+   */
+  function closeMenu() {
+    hamburger?.classList.remove('active');
+    mobileMenu?.classList.remove('open');
+    hamburger?.setAttribute('aria-expanded', 'false');
+  }
+
+  // Event listener: Toggle menu when hamburger is clicked
+  hamburger?.addEventListener('click', toggleMenu);
+
+  // Event listener: Close menu when a link is clicked (navigate to page)
+  mobileLinks.forEach((link) => {
+    link.addEventListener('click', closeMenu);
+  });
+
+  // Event listener: Close menu when clicking outside
+  document.addEventListener('click', (event) => {
+    const target = event.target as HTMLElement;
+    
+    // Check if click is outside header
+    const isClickInside = target.closest('.header');
+    const isMenuOpen = mobileMenu?.classList.contains('open');
+    
+    if (!isClickInside && isMenuOpen) {
+      closeMenu();
+    }
+  });
+
+  // Event listener: Close menu on escape key press
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      closeMenu();
+    }
+  });
+
+  // Prevent menu state issues on window resize
+  window.addEventListener('resize', () => {
+    // If window is resized to desktop size, ensure mobile menu is closed
+    if (window.innerWidth >= 768) {
+      closeMenu();
+    }
+  });
+</script>
+

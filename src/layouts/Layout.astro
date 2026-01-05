@@ -1,0 +1,125 @@
+---
+/**
+ * BASE LAYOUT COMPONENT
+ * Wraps all pages with consistent structure, meta tags, and navigation.
+ * 
+ * Props:
+ * - title: Page title (will be combined with site name)
+ * - description: Page meta description for SEO
+ */
+
+import { siteConfig, getPageTitle } from '../config.js';
+import '../styles/global.css';
+
+// Components (will be created separately)
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+// Extract props
+const { 
+  title = '', 
+  description = siteConfig.seo.description 
+} = Astro.props;
+
+// Generate full page title
+const pageTitle = getPageTitle(title);
+
+// Get current URL for canonical tag (with fallback for local dev)
+const canonicalURL = Astro.site 
+  ? new URL(Astro.url.pathname, Astro.site).href 
+  : Astro.url.pathname;
+
+// Open Graph image URL (with fallback for local dev)
+const ogImageURL = Astro.site 
+  ? new URL(siteConfig.seo.ogImage, Astro.site).href 
+  : siteConfig.seo.ogImage;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Character encoding -->
+  <meta charset="UTF-8" />
+  
+  <!-- Mobile viewport (responsive design) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Primary Meta Tags -->
+  <title>{pageTitle}</title>
+  <meta name="title" content={pageTitle} />
+  <meta name="description" content={description} />
+  <meta name="keywords" content={siteConfig.seo.keywords} />
+  
+  <!-- Canonical URL (prevents duplicate content issues) -->
+  <link rel="canonical" href={canonicalURL} />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={ogImageURL} />
+  <meta property="og:site_name" content={siteConfig.companyName} />
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content={canonicalURL} />
+  <meta property="twitter:title" content={pageTitle} />
+  <meta property="twitter:description" content={description} />
+  <meta property="twitter:image" content={ogImageURL} />
+  
+  <!-- Favicon (add your favicon to /public folder) -->
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  
+  <!-- Theme color for mobile browsers -->
+  <meta name="theme-color" content="#8B4513" />
+  
+  <!-- Preconnect to improve performance (if using external resources later) -->
+  <!-- <link rel="preconnect" href="https://fonts.googleapis.com" /> -->
+  
+  <!-- Generator tag (Astro) -->
+  <meta name="generator" content={Astro.generator} />
+</head>
+
+<body>
+  <!-- Skip to main content link (accessibility) -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  
+  <!-- Header/Navigation -->
+  <Header />
+  
+  <!-- Main content area (slot for page-specific content) -->
+  <main id="main-content">
+    <slot />
+  </main>
+  
+  <!-- Footer -->
+  <Footer />
+  
+  <!-- Optional: Add analytics script here if needed -->
+  <!-- Example: Google Analytics, Plausible, etc. -->
+</body>
+</html>
+
+<style>
+  /* Layout-specific styles (minimal, most styling in global.css) */
+  
+  /* Ensure main content takes up minimum viewport height */
+  main {
+    min-height: calc(100vh - 200px); /* Adjust based on header/footer height */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Smooth scroll behavior */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Prevent horizontal scroll on mobile */
+  body {
+    overflow-x: hidden;
+  }
+</style>
+

@@ -1,0 +1,296 @@
+---
+/**
+ * FOOTER COMPONENT
+ * Site-wide footer with contact info, quick links, and social media.
+ * 
+ * Features:
+ * - Company information and contact details
+ * - Quick navigation links
+ * - Social media links
+ * - Auto-updating copyright year
+ * - Responsive layout (stacked mobile, columns desktop)
+ */
+
+import { 
+  siteConfig, 
+  getPhoneLink, 
+  getEmailLink,
+  getYearsInBusiness 
+} from '../config.js';
+
+// Get current year for copyright
+const currentYear = new Date().getFullYear();
+
+// Quick links (same as header navigation)
+const quickLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/gallery', label: 'Gallery' },
+  { href: '/contact', label: 'Contact' },
+  { href: '/about', label: 'About' },
+];
+
+// Filter social links - only show if URL is provided
+const activeSocialLinks = Object.entries(siteConfig.socialLinks)
+  .filter(([_, url]) => url && url.length > 0)
+  .map(([platform, url]) => ({
+    platform,
+    url,
+    label: platform.charAt(0).toUpperCase() + platform.slice(1)
+  }));
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      
+      <!-- Column 1: Company Info -->
+      <div class="footer-column">
+        <h3 class="footer-heading">{siteConfig.companyName}</h3>
+        <p class="footer-description">
+          {siteConfig.business.description}
+        </p>
+        {siteConfig.business.establishedYear && (
+          <p class="footer-text">
+            <strong>Since {siteConfig.business.establishedYear}</strong>
+            {getYearsInBusiness() > 0 && ` • ${getYearsInBusiness()} years of experience`}
+          </p>
+        )}
+      </div>
+
+      <!-- Column 2: Contact Information -->
+      <div class="footer-column">
+        <h4 class="footer-heading">Contact</h4>
+        <ul class="footer-list">
+          <li class="footer-list-item">
+            <a href={getPhoneLink()} class="footer-link">
+              <span class="footer-icon" aria-hidden="true">📞</span>
+              {siteConfig.phone}
+            </a>
+          </li>
+          <li class="footer-list-item">
+            <a href={getEmailLink()} class="footer-link">
+              <span class="footer-icon" aria-hidden="true">✉️</span>
+              {siteConfig.email}
+            </a>
+          </li>
+          <li class="footer-list-item">
+            <span class="footer-icon" aria-hidden="true">📍</span>
+            <span class="footer-text">{siteConfig.address}</span>
+          </li>
+          {siteConfig.business.workingHours && (
+            <li class="footer-list-item">
+              <span class="footer-icon" aria-hidden="true">🕒</span>
+              <span class="footer-text">{siteConfig.business.workingHours}</span>
+            </li>
+          )}
+        </ul>
+      </div>
+
+      <!-- Column 3: Quick Links -->
+      <div class="footer-column">
+        <h4 class="footer-heading">Quick Links</h4>
+        <ul class="footer-list">
+          {quickLinks.map((link) => (
+            <li class="footer-list-item">
+              <a href={link.href} class="footer-link">
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Column 4: Social Media -->
+      {activeSocialLinks.length > 0 && (
+        <div class="footer-column">
+          <h4 class="footer-heading">Follow Us</h4>
+          <ul class="footer-list">
+            {activeSocialLinks.map((social) => (
+              <li class="footer-list-item">
+                <a 
+                  href={social.url} 
+                  class="footer-link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Visit our ${social.label} page (opens in new tab)`}
+                >
+                  {social.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+
+    <!-- Bottom Bar: Copyright -->
+    <div class="footer-bottom">
+      <p class="footer-copyright">
+        &copy; {currentYear} {siteConfig.companyName}. All rights reserved.
+      </p>
+      {siteConfig.business.registrationNumber && (
+        <p class="footer-registration">
+          Registration: {siteConfig.business.registrationNumber}
+        </p>
+      )}
+    </div>
+  </div>
+</footer>
+
+<style>
+  /* ============================================
+     FOOTER CONTAINER
+     ============================================ */
+  .footer {
+    background-color: var(--color-bg-secondary);
+    border-top: var(--border-width) var(--border-style) var(--color-border);
+    padding: var(--space-48) 0 var(--space-24);
+    margin-top: auto; /* Push footer to bottom if page is short */
+  }
+
+  /* ============================================
+     FOOTER CONTENT GRID
+     ============================================ */
+  .footer-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-32);
+    margin-bottom: var(--space-32);
+  }
+
+  /* Tablet: 2 columns */
+  @media (min-width: 640px) {
+    .footer-content {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* Desktop: 4 columns */
+  @media (min-width: 1024px) {
+    .footer-content {
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-40);
+    }
+  }
+
+  /* ============================================
+     FOOTER COLUMN
+     ============================================ */
+  .footer-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+  }
+
+  .footer-heading {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+    margin-bottom: var(--space-8);
+    font-family: var(--font-family-heading);
+  }
+
+  .footer-description {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+    margin-bottom: var(--space-8);
+  }
+
+  .footer-text {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-normal);
+    margin-bottom: 0;
+  }
+
+  /* ============================================
+     FOOTER LISTS
+     ============================================ */
+  .footer-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .footer-list-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-8);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: 0;
+  }
+
+  .footer-icon {
+    font-size: var(--font-size-base);
+    flex-shrink: 0;
+  }
+
+  /* ============================================
+     FOOTER LINKS
+     ============================================ */
+  .footer-link {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-8);
+  }
+
+  .footer-link:hover {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .footer-link:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  /* ============================================
+     FOOTER BOTTOM (Copyright)
+     ============================================ */
+  .footer-bottom {
+    border-top: var(--border-width) var(--border-style) var(--color-border-light);
+    padding-top: var(--space-24);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .footer-copyright,
+  .footer-registration {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  @media (min-width: 768px) {
+    .footer-bottom {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  /* ============================================
+     DARK MODE ADJUSTMENTS
+     ============================================ */
+  @media (prefers-color-scheme: dark) {
+    .footer {
+      background-color: var(--color-bg-tertiary);
+    }
+  }
+
+  [data-color-scheme="dark"] .footer {
+    background-color: var(--color-bg-tertiary);
+  }
+</style>
+

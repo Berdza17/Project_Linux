@@ -1,0 +1,947 @@
+---
+/**
+ * CONTACT PAGE
+ * Contact form with company information.
+ * 
+ * Features:
+ * - Contact form with client-side validation
+ * - Netlify Forms integration (no backend needed)
+ * - Contact info from config.js
+ * - WhatsApp, Phone, Email quick links
+ * - Responsive layout (stacked mobile, side-by-side desktop)
+ * - Accessible form with proper labels
+ */
+
+import Layout from '../layouts/Layout.astro';
+import { 
+  siteConfig, 
+  getWhatsAppLink, 
+  getPhoneLink, 
+  getEmailLink 
+} from '../config.js';
+
+// Form configuration
+const formName = 'contact-form'; // Used by Netlify Forms
+---
+
+<Layout 
+  title="Contact Us" 
+  description={`Get in touch with ${siteConfig.companyName}. Request a free quote for custom furniture. Phone: ${siteConfig.phone}`}
+>
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container">
+      <h1 class="page-title">Contact Us</h1>
+      <p class="page-description">
+        Ready to start your project? Get in touch for a free consultation and quote.
+      </p>
+    </div>
+  </section>
+
+  <!-- Contact Content -->
+  <section class="contact-section">
+    <div class="container">
+      <div class="contact-grid">
+        
+        <!-- Contact Form -->
+        <div class="contact-form-wrapper">
+          <h2 class="section-title">Send Us a Message</h2>
+          
+          <!-- Netlify Forms: Add data-netlify="true" for Netlify hosting -->
+          <!-- Formspree: Replace action with your Formspree endpoint -->
+          <form 
+            id="contact-form"
+            name={formName}
+            method="POST"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            class="contact-form"
+          >
+            <!-- Honeypot field for spam protection (hidden) -->
+            <p class="hidden-field">
+              <label>Don't fill this out: <input name="bot-field" /></label>
+            </p>
+            
+            <!-- Hidden field for Netlify form name -->
+            <input type="hidden" name="form-name" value={formName} />
+
+            <!-- Name Field -->
+            <div class="form-group">
+              <label for="name" class="form-label">
+                Full Name <span class="required" aria-hidden="true">*</span>
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                class="form-input"
+                placeholder="Your full name"
+                required
+                autocomplete="name"
+                aria-required="true"
+              />
+              <span class="form-error" id="name-error" aria-live="polite"></span>
+            </div>
+
+            <!-- Email Field -->
+            <div class="form-group">
+              <label for="email" class="form-label">
+                Email Address <span class="required" aria-hidden="true">*</span>
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="form-input"
+                placeholder="your@email.com"
+                required
+                autocomplete="email"
+                aria-required="true"
+              />
+              <span class="form-error" id="email-error" aria-live="polite"></span>
+            </div>
+
+            <!-- Phone Field -->
+            <div class="form-group">
+              <label for="phone" class="form-label">
+                Phone Number <span class="required" aria-hidden="true">*</span>
+              </label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                class="form-input"
+                placeholder="+387 XX XXX XXXX"
+                required
+                autocomplete="tel"
+                aria-required="true"
+              />
+              <span class="form-error" id="phone-error" aria-live="polite"></span>
+            </div>
+
+            <!-- Message Field -->
+            <div class="form-group">
+              <label for="message" class="form-label">
+                Your Message <span class="required" aria-hidden="true">*</span>
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                class="form-input form-textarea"
+                placeholder="Tell us about your project: what type of furniture, dimensions, materials, etc."
+                rows="5"
+                required
+                aria-required="true"
+              ></textarea>
+              <span class="form-error" id="message-error" aria-live="polite"></span>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary btn-submit" id="submit-btn">
+                <span class="btn-text">Send Message</span>
+                <span class="btn-loading" aria-hidden="true">Sending...</span>
+              </button>
+            </div>
+
+            <!-- Form Messages -->
+            <div id="form-success" class="form-message form-success" hidden>
+              <span class="message-icon" aria-hidden="true">✅</span>
+              <div>
+                <strong>Message Sent!</strong>
+                <p>Thank you for contacting us. We'll get back to you within 24 hours.</p>
+              </div>
+            </div>
+
+            <div id="form-error" class="form-message form-error-message" hidden>
+              <span class="message-icon" aria-hidden="true">❌</span>
+              <div>
+                <strong>Something went wrong</strong>
+                <p>Please try again or contact us directly via phone or email.</p>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="contact-info-wrapper">
+          <h2 class="section-title">Get In Touch</h2>
+          
+          <div class="contact-info">
+            <!-- Phone -->
+            <div class="contact-item">
+              <div class="contact-icon" aria-hidden="true">📞</div>
+              <div class="contact-details">
+                <h3 class="contact-label">Phone</h3>
+                <a href={getPhoneLink()} class="contact-link">
+                  {siteConfig.phone}
+                </a>
+                <p class="contact-note">Call us during business hours</p>
+              </div>
+            </div>
+
+            <!-- WhatsApp -->
+            <div class="contact-item">
+              <div class="contact-icon" aria-hidden="true">💬</div>
+              <div class="contact-details">
+                <h3 class="contact-label">WhatsApp</h3>
+                <a 
+                  href={getWhatsAppLink('Hello! I would like to inquire about your furniture.')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="contact-link"
+                >
+                  Chat with us
+                </a>
+                <p class="contact-note">Quick responses, available anytime</p>
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="contact-item">
+              <div class="contact-icon" aria-hidden="true">✉️</div>
+              <div class="contact-details">
+                <h3 class="contact-label">Email</h3>
+                <a href={getEmailLink('Furniture Inquiry')} class="contact-link">
+                  {siteConfig.email}
+                </a>
+                <p class="contact-note">We respond within 24 hours</p>
+              </div>
+            </div>
+
+            <!-- Address -->
+            <div class="contact-item">
+              <div class="contact-icon" aria-hidden="true">📍</div>
+              <div class="contact-details">
+                <h3 class="contact-label">Visit Us</h3>
+                <address class="contact-address">
+                  {siteConfig.address}
+                </address>
+                <p class="contact-note">By appointment only</p>
+              </div>
+            </div>
+
+            <!-- Business Hours -->
+            <div class="contact-item">
+              <div class="contact-icon" aria-hidden="true">🕒</div>
+              <div class="contact-details">
+                <h3 class="contact-label">Business Hours</h3>
+                <p class="contact-hours">{siteConfig.business.workingHours}</p>
+                <p class="contact-note">Closed on weekends and holidays</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Action Buttons -->
+          <div class="quick-actions">
+            <a 
+              href={getWhatsAppLink('Hello! I would like to inquire about your furniture.')}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-whatsapp"
+            >
+              <span class="btn-icon" aria-hidden="true">💬</span>
+              WhatsApp Us
+            </a>
+            <a href={getPhoneLink()} class="btn btn-phone">
+              <span class="btn-icon" aria-hidden="true">📞</span>
+              Call Now
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Map Section (Optional - placeholder) -->
+  <section class="map-section">
+    <div class="container">
+      <div class="map-placeholder">
+        <span class="map-icon" aria-hidden="true">🗺️</span>
+        <p>Map would go here</p>
+        <p class="map-note">Add Google Maps embed or static map image</p>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* ============================================
+     PAGE HEADER
+     ============================================ */
+  .page-header {
+    background-color: var(--color-bg-secondary);
+    padding: var(--space-48) 0;
+    text-align: center;
+  }
+
+  .page-title {
+    font-size: var(--font-size-4xl);
+    margin-bottom: var(--space-16);
+    color: var(--color-text);
+  }
+
+  .page-description {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .page-header {
+      padding: var(--space-64) 0;
+    }
+    .page-title {
+      font-size: var(--font-size-5xl);
+    }
+  }
+
+  /* ============================================
+     CONTACT SECTION
+     ============================================ */
+  .contact-section {
+    padding: var(--space-48) 0;
+    background-color: var(--color-bg);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-48);
+  }
+
+  @media (min-width: 1024px) {
+    .contact-grid {
+      grid-template-columns: 1.2fr 1fr;
+      gap: var(--space-64);
+    }
+  }
+
+  .section-title {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--space-24);
+    color: var(--color-text);
+  }
+
+  /* ============================================
+     CONTACT FORM
+     ============================================ */
+  .contact-form-wrapper {
+    background-color: var(--color-bg);
+    padding: var(--space-32);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-24);
+  }
+
+  /* Hidden honeypot field for spam protection */
+  .hidden-field {
+    display: none;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .form-label {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text);
+  }
+
+  .required {
+    color: var(--color-error);
+  }
+
+  .form-input {
+    padding: var(--space-16);
+    font-size: var(--font-size-base);
+    border: var(--border-width-2) solid var(--color-border);
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    min-height: 48px; /* Touch target size */
+  }
+
+  .form-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.15);
+  }
+
+  .form-input::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  .form-input.error {
+    border-color: var(--color-error);
+  }
+
+  .form-input.valid {
+    border-color: var(--color-success);
+  }
+
+  .form-textarea {
+    min-height: 150px;
+    resize: vertical;
+  }
+
+  .form-error {
+    font-size: var(--font-size-sm);
+    color: var(--color-error);
+    min-height: 20px;
+  }
+
+  /* Submit Button */
+  .btn-submit {
+    position: relative;
+    min-height: 56px;
+    font-size: var(--font-size-lg);
+  }
+
+  .btn-submit .btn-loading {
+    display: none;
+  }
+
+  .btn-submit.loading .btn-text {
+    display: none;
+  }
+
+  .btn-submit.loading .btn-loading {
+    display: inline;
+  }
+
+  .btn-submit:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  /* Form Messages */
+  .form-message {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-16);
+    padding: var(--space-20);
+    border-radius: var(--radius-md);
+    margin-top: var(--space-16);
+  }
+
+  .form-message[hidden] {
+    display: none;
+  }
+
+  .form-success {
+    background-color: rgba(76, 175, 80, 0.1);
+    border: 1px solid var(--color-success);
+    color: var(--color-success);
+  }
+
+  .form-error-message {
+    background-color: rgba(229, 57, 53, 0.1);
+    border: 1px solid var(--color-error);
+    color: var(--color-error);
+  }
+
+  .message-icon {
+    font-size: var(--font-size-2xl);
+    flex-shrink: 0;
+  }
+
+  .form-message p {
+    margin: var(--space-4) 0 0;
+    font-size: var(--font-size-sm);
+  }
+
+  /* ============================================
+     CONTACT INFO
+     ============================================ */
+  .contact-info-wrapper {
+    background-color: var(--color-bg-secondary);
+    padding: var(--space-32);
+    border-radius: var(--radius-lg);
+    height: fit-content;
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-24);
+    margin-bottom: var(--space-32);
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-16);
+  }
+
+  .contact-icon {
+    font-size: var(--font-size-2xl);
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-bg);
+    border-radius: var(--radius-md);
+  }
+
+  .contact-details {
+    flex: 1;
+  }
+
+  .contact-label {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+    margin: 0 0 var(--space-4);
+  }
+
+  .contact-link {
+    font-size: var(--font-size-lg);
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+    word-break: break-word;
+  }
+
+  .contact-link:hover {
+    color: var(--color-primary-dark);
+    text-decoration: underline;
+  }
+
+  .contact-address {
+    font-style: normal;
+    font-size: var(--font-size-base);
+    color: var(--color-text);
+    line-height: var(--line-height-relaxed);
+  }
+
+  .contact-hours {
+    font-size: var(--font-size-base);
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .contact-note {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin: var(--space-4) 0 0;
+  }
+
+  /* Quick Action Buttons */
+  .quick-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+  }
+
+  @media (min-width: 640px) {
+    .quick-actions {
+      flex-direction: row;
+    }
+  }
+
+  /* ============================================
+     BUTTONS
+     ============================================ */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-8);
+    padding: var(--space-16) var(--space-24);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-base);
+    cursor: pointer;
+    border: 2px solid transparent;
+    min-height: 48px; /* Touch target size */
+    flex: 1;
+  }
+
+  .btn-primary {
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    width: 100%;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .btn-whatsapp {
+    background-color: #25D366;
+    color: white;
+  }
+
+  .btn-whatsapp:hover {
+    background-color: #20BA5A;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    text-decoration: none;
+  }
+
+  .btn-phone {
+    background-color: var(--color-primary);
+    color: white;
+  }
+
+  .btn-phone:hover {
+    background-color: var(--color-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    text-decoration: none;
+  }
+
+  .btn-icon {
+    font-size: var(--font-size-xl);
+  }
+
+  /* ============================================
+     MAP SECTION
+     ============================================ */
+  .map-section {
+    padding: var(--space-48) 0 var(--space-64);
+    background-color: var(--color-bg);
+  }
+
+  .map-placeholder {
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-lg);
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--color-text-muted);
+  }
+
+  .map-icon {
+    font-size: var(--font-size-6xl);
+    margin-bottom: var(--space-16);
+    opacity: 0.5;
+  }
+
+  .map-note {
+    font-size: var(--font-size-sm);
+    margin-top: var(--space-8);
+  }
+
+  /* ============================================
+     ACCESSIBILITY & REDUCED MOTION
+     ============================================ */
+  @media (prefers-reduced-motion: reduce) {
+    .btn,
+    .form-input {
+      transition: none;
+    }
+  }
+
+  /* High contrast focus states */
+  .btn:focus,
+  .contact-link:focus {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  /* ============================================
+     DARK MODE
+     ============================================ */
+  @media (prefers-color-scheme: dark) {
+    .contact-form-wrapper {
+      background-color: var(--color-bg-secondary);
+    }
+
+    .contact-info-wrapper {
+      background-color: var(--color-bg-tertiary);
+    }
+
+    .contact-icon {
+      background-color: var(--color-bg-secondary);
+    }
+  }
+</style>
+
+<script>
+  /**
+   * CONTACT FORM FUNCTIONALITY
+   * Client-side validation and form submission handling.
+   * Works with Netlify Forms or any form backend.
+   */
+
+  // ============================================
+  // DOM ELEMENTS
+  // ============================================
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+  const successMessage = document.getElementById('form-success');
+  const errorMessage = document.getElementById('form-error');
+
+  // Form fields
+  const nameField = document.getElementById('name') as HTMLInputElement;
+  const emailField = document.getElementById('email') as HTMLInputElement;
+  const phoneField = document.getElementById('phone') as HTMLInputElement;
+  const messageField = document.getElementById('message') as HTMLTextAreaElement;
+
+  // Error display elements
+  const nameError = document.getElementById('name-error');
+  const emailError = document.getElementById('email-error');
+  const phoneError = document.getElementById('phone-error');
+  const messageError = document.getElementById('message-error');
+
+  // ============================================
+  // VALIDATION FUNCTIONS
+  // ============================================
+
+  /**
+   * Validate name field
+   * @returns {boolean} True if valid
+   */
+  function validateName(): boolean {
+    const value = nameField.value.trim();
+    
+    if (!value) {
+      showError(nameField, nameError, 'Please enter your name');
+      return false;
+    }
+    
+    if (value.length < 2) {
+      showError(nameField, nameError, 'Name must be at least 2 characters');
+      return false;
+    }
+    
+    showValid(nameField, nameError);
+    return true;
+  }
+
+  /**
+   * Validate email field
+   * @returns {boolean} True if valid
+   */
+  function validateEmail(): boolean {
+    const value = emailField.value.trim();
+    // Simple email regex - catches most invalid emails
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    if (!value) {
+      showError(emailField, emailError, 'Please enter your email');
+      return false;
+    }
+    
+    if (!emailRegex.test(value)) {
+      showError(emailField, emailError, 'Please enter a valid email address');
+      return false;
+    }
+    
+    showValid(emailField, emailError);
+    return true;
+  }
+
+  /**
+   * Validate phone field
+   * @returns {boolean} True if valid
+   */
+  function validatePhone(): boolean {
+    const value = phoneField.value.trim();
+    // Allow digits, spaces, dashes, parentheses, plus sign
+    const phoneRegex = /^[\d\s\-\(\)\+]{6,20}$/;
+    
+    if (!value) {
+      showError(phoneField, phoneError, 'Please enter your phone number');
+      return false;
+    }
+    
+    if (!phoneRegex.test(value)) {
+      showError(phoneField, phoneError, 'Please enter a valid phone number');
+      return false;
+    }
+    
+    showValid(phoneField, phoneError);
+    return true;
+  }
+
+  /**
+   * Validate message field
+   * @returns {boolean} True if valid
+   */
+  function validateMessage(): boolean {
+    const value = messageField.value.trim();
+    
+    if (!value) {
+      showError(messageField, messageError, 'Please enter your message');
+      return false;
+    }
+    
+    if (value.length < 10) {
+      showError(messageField, messageError, 'Message must be at least 10 characters');
+      return false;
+    }
+    
+    showValid(messageField, messageError);
+    return true;
+  }
+
+  /**
+   * Show error state on field
+   */
+  function showError(field: HTMLInputElement | HTMLTextAreaElement, errorEl: HTMLElement | null, message: string) {
+    field.classList.remove('valid');
+    field.classList.add('error');
+    if (errorEl) {
+      errorEl.textContent = message;
+    }
+  }
+
+  /**
+   * Show valid state on field
+   */
+  function showValid(field: HTMLInputElement | HTMLTextAreaElement, errorEl: HTMLElement | null) {
+    field.classList.remove('error');
+    field.classList.add('valid');
+    if (errorEl) {
+      errorEl.textContent = '';
+    }
+  }
+
+  /**
+   * Validate entire form
+   * @returns {boolean} True if all fields are valid
+   */
+  function validateForm(): boolean {
+    const isNameValid = validateName();
+    const isEmailValid = validateEmail();
+    const isPhoneValid = validatePhone();
+    const isMessageValid = validateMessage();
+    
+    return isNameValid && isEmailValid && isPhoneValid && isMessageValid;
+  }
+
+  // ============================================
+  // EVENT LISTENERS - Real-time validation
+  // ============================================
+  nameField?.addEventListener('blur', validateName);
+  emailField?.addEventListener('blur', validateEmail);
+  phoneField?.addEventListener('blur', validatePhone);
+  messageField?.addEventListener('blur', validateMessage);
+
+  // Clear error on input
+  nameField?.addEventListener('input', () => {
+    if (nameField.classList.contains('error')) {
+      validateName();
+    }
+  });
+
+  emailField?.addEventListener('input', () => {
+    if (emailField.classList.contains('error')) {
+      validateEmail();
+    }
+  });
+
+  phoneField?.addEventListener('input', () => {
+    if (phoneField.classList.contains('error')) {
+      validatePhone();
+    }
+  });
+
+  messageField?.addEventListener('input', () => {
+    if (messageField.classList.contains('error')) {
+      validateMessage();
+    }
+  });
+
+  // ============================================
+  // FORM SUBMISSION
+  // ============================================
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    // Hide any previous messages
+    if (successMessage) successMessage.hidden = true;
+    if (errorMessage) errorMessage.hidden = true;
+
+    // Validate form
+    if (!validateForm()) {
+      // Focus first invalid field
+      const firstError = form.querySelector('.error') as HTMLElement;
+      firstError?.focus();
+      return;
+    }
+
+    // Show loading state
+    submitBtn?.classList.add('loading');
+    submitBtn.disabled = true;
+
+    try {
+      // Collect form data
+      const formData = new FormData(form);
+
+      // Submit to Netlify Forms (or any form backend)
+      const response = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData as any).toString(),
+      });
+
+      if (response.ok) {
+        // Success!
+        if (successMessage) successMessage.hidden = false;
+        form.reset();
+        
+        // Clear valid states
+        [nameField, emailField, phoneField, messageField].forEach(field => {
+          field?.classList.remove('valid', 'error');
+        });
+
+        // Scroll to success message
+        successMessage?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      if (errorMessage) errorMessage.hidden = false;
+      errorMessage?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } finally {
+      // Reset button state
+      submitBtn?.classList.remove('loading');
+      submitBtn.disabled = false;
+    }
+  });
+
+  // ============================================
+  // FORMSPREE ALTERNATIVE
+  // ============================================
+  /**
+   * If using Formspree instead of Netlify Forms:
+   * 
+   * 1. Create account at https://formspree.io
+   * 2. Create a new form and get your endpoint
+   * 3. Replace the form action:
+   *    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+   * 4. Remove data-netlify="true" and netlify-honeypot
+   * 5. Update the fetch URL to your Formspree endpoint:
+   *    fetch('https://formspree.io/f/YOUR_FORM_ID', {
+   *      method: 'POST',
+   *      body: formData,
+   *      headers: { 'Accept': 'application/json' }
+   *    })
+   */
+</script>
+

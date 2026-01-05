@@ -1,0 +1,910 @@
+---
+/**
+ * GALLERY PAGE
+ * Product portfolio with filtering and lightbox functionality.
+ * 
+ * Features:
+ * - Responsive grid (1→2→3 columns)
+ * - Category filtering with smooth transitions
+ * - Lightbox for enlarged images
+ * - All images lazy-loaded
+ * - Keyboard navigation (ESC to close)
+ */
+
+import Layout from '../layouts/Layout.astro';
+import LazyImage from '../components/LazyImage.astro';
+import { siteConfig } from '../config.js';
+
+// Product categories for filter buttons
+const categories = [
+  { id: 'all', label: 'All' },
+  { id: 'kitchens', label: 'Kitchens' },
+  { id: 'tables', label: 'Living Room Tables' },
+  { id: 'tv-stands', label: 'TV Stands' },
+  { id: 'wardrobes', label: 'Wardrobes' },
+];
+
+// Mock product data (20+ items)
+// In production, this would come from a CMS or database
+const products = [
+  // Kitchens (5 items)
+  {
+    id: 1,
+    title: 'Modern White Kitchen',
+    category: 'kitchens',
+    image: '/images/gallery/kitchen-1',
+    alt: 'Modern white kitchen with wooden accents'
+  },
+  {
+    id: 2,
+    title: 'Classic Oak Kitchen',
+    category: 'kitchens',
+    image: '/images/gallery/kitchen-2',
+    alt: 'Classic oak wood kitchen cabinets'
+  },
+  {
+    id: 3,
+    title: 'Minimalist Kitchen Design',
+    category: 'kitchens',
+    image: '/images/gallery/kitchen-3',
+    alt: 'Minimalist kitchen with clean lines'
+  },
+  {
+    id: 4,
+    title: 'Rustic Farmhouse Kitchen',
+    category: 'kitchens',
+    image: '/images/gallery/kitchen-4',
+    alt: 'Rustic farmhouse style kitchen'
+  },
+  {
+    id: 5,
+    title: 'Contemporary Kitchen',
+    category: 'kitchens',
+    image: '/images/gallery/kitchen-5',
+    alt: 'Contemporary kitchen with island'
+  },
+
+  // Living Room Tables (5 items)
+  {
+    id: 6,
+    title: 'Solid Oak Dining Table',
+    category: 'tables',
+    image: '/images/gallery/table-1',
+    alt: 'Solid oak dining table for 8 people'
+  },
+  {
+    id: 7,
+    title: 'Coffee Table Set',
+    category: 'tables',
+    image: '/images/gallery/table-2',
+    alt: 'Wooden coffee table set'
+  },
+  {
+    id: 8,
+    title: 'Extendable Dining Table',
+    category: 'tables',
+    image: '/images/gallery/table-3',
+    alt: 'Extendable dining table in walnut'
+  },
+  {
+    id: 9,
+    title: 'Round Coffee Table',
+    category: 'tables',
+    image: '/images/gallery/table-4',
+    alt: 'Round wooden coffee table'
+  },
+  {
+    id: 10,
+    title: 'Console Table',
+    category: 'tables',
+    image: '/images/gallery/table-5',
+    alt: 'Entryway console table'
+  },
+
+  // TV Stands (5 items)
+  {
+    id: 11,
+    title: 'Floating TV Unit',
+    category: 'tv-stands',
+    image: '/images/gallery/tv-stand-1',
+    alt: 'Floating TV unit with LED lighting'
+  },
+  {
+    id: 12,
+    title: 'Entertainment Center',
+    category: 'tv-stands',
+    image: '/images/gallery/tv-stand-2',
+    alt: 'Full wall entertainment center'
+  },
+  {
+    id: 13,
+    title: 'Minimalist TV Stand',
+    category: 'tv-stands',
+    image: '/images/gallery/tv-stand-3',
+    alt: 'Minimalist low TV stand'
+  },
+  {
+    id: 14,
+    title: 'Corner TV Unit',
+    category: 'tv-stands',
+    image: '/images/gallery/tv-stand-4',
+    alt: 'Corner TV unit with storage'
+  },
+  {
+    id: 15,
+    title: 'Modern Media Console',
+    category: 'tv-stands',
+    image: '/images/gallery/tv-stand-5',
+    alt: 'Modern media console in oak'
+  },
+
+  // Wardrobes (6 items)
+  {
+    id: 16,
+    title: 'Walk-in Wardrobe',
+    category: 'wardrobes',
+    image: '/images/gallery/wardrobe-1',
+    alt: 'Custom walk-in wardrobe'
+  },
+  {
+    id: 17,
+    title: 'Sliding Door Wardrobe',
+    category: 'wardrobes',
+    image: '/images/gallery/wardrobe-2',
+    alt: 'Sliding door wardrobe with mirror'
+  },
+  {
+    id: 18,
+    title: 'Built-in Closet System',
+    category: 'wardrobes',
+    image: '/images/gallery/wardrobe-3',
+    alt: 'Built-in closet organization system'
+  },
+  {
+    id: 19,
+    title: 'Classic Wardrobe',
+    category: 'wardrobes',
+    image: '/images/gallery/wardrobe-4',
+    alt: 'Classic wooden wardrobe'
+  },
+  {
+    id: 20,
+    title: 'Bedroom Wardrobe Set',
+    category: 'wardrobes',
+    image: '/images/gallery/wardrobe-5',
+    alt: 'Complete bedroom wardrobe set'
+  },
+  {
+    id: 21,
+    title: 'Open Concept Closet',
+    category: 'wardrobes',
+    image: '/images/gallery/wardrobe-6',
+    alt: 'Open concept closet design'
+  },
+];
+---
+
+<Layout 
+  title="Gallery" 
+  description={`Browse our portfolio of custom furniture: kitchens, tables, TV stands, and wardrobes. ${siteConfig.companyName}`}
+>
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container">
+      <h1 class="page-title">Our Gallery</h1>
+      <p class="page-description">
+        Browse our portfolio of handcrafted furniture. Each piece is custom-made with attention to detail and quality materials.
+      </p>
+    </div>
+  </section>
+
+  <!-- Filter Buttons -->
+  <section class="filter-section">
+    <div class="container">
+      <div class="filter-buttons" role="tablist" aria-label="Filter products by category">
+        {categories.map((cat, index) => (
+          <button
+            class={`filter-btn ${index === 0 ? 'active' : ''}`}
+            data-filter={cat.id}
+            role="tab"
+            aria-selected={index === 0 ? 'true' : 'false'}
+            aria-controls="gallery-grid"
+          >
+            {cat.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Grid -->
+  <section class="gallery-section">
+    <div class="container">
+      <div class="gallery-grid" id="gallery-grid" role="tabpanel">
+        {products.map((product) => (
+          <article 
+            class="gallery-item" 
+            data-category={product.category}
+            data-id={product.id}
+          >
+            <button 
+              class="gallery-item-btn"
+              aria-label={`View ${product.title} in full size`}
+              data-image={`${product.image}.jpg`}
+              data-title={product.title}
+              data-alt={product.alt}
+            >
+              <div class="gallery-image">
+                <LazyImage
+                  src={product.image}
+                  alt={product.alt}
+                  width={600}
+                  height={400}
+                  class="gallery-img"
+                />
+                <div class="gallery-overlay">
+                  <span class="gallery-zoom-icon" aria-hidden="true">🔍</span>
+                </div>
+              </div>
+              <div class="gallery-info">
+                <span class="gallery-category">{categories.find(c => c.id === product.category)?.label}</span>
+                <h3 class="gallery-title">{product.title}</h3>
+              </div>
+            </button>
+          </article>
+        ))}
+      </div>
+
+      <!-- Empty state (shown when no products match filter) -->
+      <div class="gallery-empty" id="gallery-empty" hidden>
+        <p>No products found in this category.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox Modal -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image preview" hidden>
+    <div class="lightbox-backdrop"></div>
+    <div class="lightbox-content">
+      <button class="lightbox-close" aria-label="Close lightbox">
+        <span aria-hidden="true">✕</span>
+      </button>
+      <figure class="lightbox-figure">
+        <img 
+          class="lightbox-image" 
+          id="lightbox-image"
+          src="" 
+          alt=""
+          loading="eager"
+        />
+        <figcaption class="lightbox-caption" id="lightbox-caption"></figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <!-- CTA Section -->
+  <section class="gallery-cta">
+    <div class="container">
+      <h2 class="cta-title">Like What You See?</h2>
+      <p class="cta-description">
+        Every piece is custom-made to your specifications. Contact us to discuss your project.
+      </p>
+      <a href="/contact" class="btn btn-primary">Get a Free Quote</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* ============================================
+     PAGE HEADER
+     ============================================ */
+  .page-header {
+    background-color: var(--color-bg-secondary);
+    padding: var(--space-48) 0;
+    text-align: center;
+  }
+
+  .page-title {
+    font-size: var(--font-size-4xl);
+    margin-bottom: var(--space-16);
+    color: var(--color-text);
+  }
+
+  .page-description {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .page-header {
+      padding: var(--space-64) 0;
+    }
+    .page-title {
+      font-size: var(--font-size-5xl);
+    }
+  }
+
+  /* ============================================
+     FILTER BUTTONS
+     ============================================ */
+  .filter-section {
+    padding: var(--space-32) 0;
+    background-color: var(--color-bg);
+    position: sticky;
+    top: 70px; /* Below header */
+    z-index: var(--z-sticky);
+    border-bottom: var(--border-width) var(--border-style) var(--color-border);
+  }
+
+  .filter-buttons {
+    display: flex;
+    gap: var(--space-8);
+    overflow-x: auto;
+    padding-bottom: var(--space-8);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .filter-buttons::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+  }
+
+  .filter-btn {
+    flex-shrink: 0;
+    padding: var(--space-12) var(--space-24);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+    background-color: var(--color-bg-secondary);
+    border: var(--border-width-2) solid transparent;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+  }
+
+  .filter-btn:hover {
+    color: var(--color-primary);
+    background-color: var(--color-bg-tertiary);
+  }
+
+  .filter-btn:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .filter-btn.active {
+    color: white;
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+
+  @media (min-width: 768px) {
+    .filter-buttons {
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  }
+
+  /* ============================================
+     GALLERY GRID
+     ============================================ */
+  .gallery-section {
+    padding: var(--space-48) 0;
+    background-color: var(--color-bg);
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-24);
+  }
+
+  @media (min-width: 640px) {
+    .gallery-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-24);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .gallery-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-32);
+    }
+  }
+
+  /* ============================================
+     GALLERY ITEM
+     ============================================ */
+  .gallery-item {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity var(--transition-base), transform var(--transition-base);
+  }
+
+  .gallery-item.hidden {
+    opacity: 0;
+    transform: scale(0.8);
+    position: absolute;
+    pointer-events: none;
+    visibility: hidden;
+  }
+
+  .gallery-item-btn {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: none;
+    background: var(--color-bg);
+    cursor: pointer;
+    text-align: left;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-base);
+  }
+
+  .gallery-item-btn:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+  }
+
+  .gallery-item-btn:focus {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .gallery-image {
+    position: relative;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    background-color: var(--color-bg-secondary);
+  }
+
+  .gallery-image :global(.lazy-image-wrapper) {
+    width: 100%;
+    height: 100%;
+  }
+
+  .gallery-image :global(.gallery-img),
+  .gallery-image :global(.lazy-image) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+  }
+
+  .gallery-item-btn:hover .gallery-image :global(.lazy-image) {
+    transform: scale(1.05);
+  }
+
+  /* Hover overlay */
+  .gallery-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-overlay);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity var(--transition-base);
+  }
+
+  .gallery-item-btn:hover .gallery-overlay {
+    opacity: 1;
+  }
+
+  .gallery-zoom-icon {
+    font-size: var(--font-size-4xl);
+    color: white;
+    transform: scale(0.8);
+    transition: transform var(--transition-base);
+  }
+
+  .gallery-item-btn:hover .gallery-zoom-icon {
+    transform: scale(1);
+  }
+
+  .gallery-info {
+    padding: var(--space-16);
+  }
+
+  .gallery-category {
+    display: inline-block;
+    font-size: var(--font-size-sm);
+    color: var(--color-primary);
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing-wide);
+    margin-bottom: var(--space-4);
+  }
+
+  .gallery-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  /* Empty state */
+  .gallery-empty {
+    text-align: center;
+    padding: var(--space-64);
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-lg);
+  }
+
+  .gallery-empty[hidden] {
+    display: none;
+  }
+
+  /* ============================================
+     LIGHTBOX
+     ============================================ */
+  .lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: var(--z-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-base), visibility var(--transition-base);
+  }
+
+  .lightbox:not([hidden]) {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .lightbox[hidden] {
+    display: flex; /* Override hidden behavior for transition */
+  }
+
+  .lightbox-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+  }
+
+  .lightbox-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    z-index: 1;
+    transform: scale(0.9);
+    transition: transform var(--transition-base);
+  }
+
+  .lightbox:not([hidden]) .lightbox-content {
+    transform: scale(1);
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: var(--font-size-2xl);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color var(--transition-fast);
+    z-index: 2;
+  }
+
+  .lightbox-close:hover {
+    color: var(--color-primary);
+  }
+
+  .lightbox-close:focus {
+    outline: 2px solid white;
+    outline-offset: 2px;
+  }
+
+  .lightbox-figure {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .lightbox-image {
+    max-width: 90vw;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-2xl);
+  }
+
+  .lightbox-caption {
+    margin-top: var(--space-16);
+    color: white;
+    font-size: var(--font-size-lg);
+    text-align: center;
+  }
+
+  /* ============================================
+     CTA SECTION
+     ============================================ */
+  .gallery-cta {
+    background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+    padding: var(--space-64) 0;
+    text-align: center;
+    color: white;
+  }
+
+  .gallery-cta .cta-title {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--space-16);
+    color: white;
+  }
+
+  .gallery-cta .cta-description {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--space-32);
+    color: rgba(255, 255, 255, 0.95);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-8);
+    padding: var(--space-16) var(--space-32);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-base);
+    cursor: pointer;
+    border: 2px solid transparent;
+  }
+
+  .btn-primary {
+    background-color: white;
+    color: var(--color-primary);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-bg-secondary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    text-decoration: none;
+  }
+
+  /* ============================================
+     ACCESSIBILITY & MOTION
+     ============================================ */
+  @media (prefers-reduced-motion: reduce) {
+    .gallery-item,
+    .gallery-item-btn,
+    .lightbox,
+    .lightbox-content {
+      transition: none;
+    }
+
+    .gallery-image :global(.lazy-image) {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  /**
+   * GALLERY FUNCTIONALITY
+   * Handles filtering and lightbox features.
+   * Pure vanilla JavaScript - no external libraries.
+   */
+
+  // ============================================
+  // DOM ELEMENTS
+  // ============================================
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const galleryItems = document.querySelectorAll('.gallery-item');
+  const galleryEmpty = document.getElementById('gallery-empty');
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImage = document.getElementById('lightbox-image') as HTMLImageElement;
+  const lightboxCaption = document.getElementById('lightbox-caption');
+  const lightboxClose = document.querySelector('.lightbox-close');
+  const lightboxBackdrop = document.querySelector('.lightbox-backdrop');
+  const galleryItemButtons = document.querySelectorAll('.gallery-item-btn');
+
+  // ============================================
+  // FILTER FUNCTIONALITY
+  // ============================================
+
+  /**
+   * Filter gallery items by category
+   * @param {string} category - The category to filter by ('all' shows everything)
+   */
+  function filterGallery(category: string) {
+    let visibleCount = 0;
+
+    galleryItems.forEach((item) => {
+      const itemCategory = (item as HTMLElement).dataset.category;
+      const shouldShow = category === 'all' || itemCategory === category;
+
+      if (shouldShow) {
+        item.classList.remove('hidden');
+        visibleCount++;
+      } else {
+        item.classList.add('hidden');
+      }
+    });
+
+    // Show empty state if no items match
+    if (galleryEmpty) {
+      galleryEmpty.hidden = visibleCount > 0;
+    }
+  }
+
+  /**
+   * Update active filter button
+   * @param {HTMLElement} activeButton - The button that was clicked
+   */
+  function updateActiveFilter(activeButton: HTMLElement) {
+    filterButtons.forEach((btn) => {
+      btn.classList.remove('active');
+      btn.setAttribute('aria-selected', 'false');
+    });
+    activeButton.classList.add('active');
+    activeButton.setAttribute('aria-selected', 'true');
+  }
+
+  // Add click event listeners to filter buttons
+  filterButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const category = (button as HTMLElement).dataset.filter || 'all';
+      updateActiveFilter(button as HTMLElement);
+      filterGallery(category);
+    });
+  });
+
+  // ============================================
+  // LIGHTBOX FUNCTIONALITY
+  // ============================================
+
+  /**
+   * Open lightbox with specified image
+   * @param {string} imageSrc - URL of the image to display
+   * @param {string} title - Image title for caption
+   * @param {string} alt - Alt text for accessibility
+   */
+  function openLightbox(imageSrc: string, title: string, alt: string) {
+    if (!lightbox || !lightboxImage || !lightboxCaption) return;
+
+    // Set image source and caption
+    lightboxImage.src = imageSrc;
+    lightboxImage.alt = alt;
+    lightboxCaption.textContent = title;
+
+    // Show lightbox
+    lightbox.hidden = false;
+
+    // Prevent body scroll when lightbox is open
+    document.body.style.overflow = 'hidden';
+
+    // Focus the close button for accessibility
+    (lightboxClose as HTMLElement)?.focus();
+  }
+
+  /**
+   * Close lightbox
+   */
+  function closeLightbox() {
+    if (!lightbox) return;
+
+    // Hide lightbox
+    lightbox.hidden = true;
+
+    // Restore body scroll
+    document.body.style.overflow = '';
+
+    // Clear image source to stop loading
+    if (lightboxImage) {
+      lightboxImage.src = '';
+    }
+  }
+
+  // Add click event listeners to gallery items
+  galleryItemButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const btn = button as HTMLElement;
+      const imageSrc = btn.dataset.image || '';
+      const title = btn.dataset.title || '';
+      const alt = btn.dataset.alt || '';
+      openLightbox(imageSrc, title, alt);
+    });
+  });
+
+  // Close lightbox when clicking close button
+  lightboxClose?.addEventListener('click', closeLightbox);
+
+  // Close lightbox when clicking backdrop
+  lightboxBackdrop?.addEventListener('click', closeLightbox);
+
+  // Close lightbox on ESC key
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && lightbox && !lightbox.hidden) {
+      closeLightbox();
+    }
+  });
+
+  // Prevent clicks on the image from closing lightbox
+  lightboxImage?.addEventListener('click', (event) => {
+    event.stopPropagation();
+  });
+
+  // ============================================
+  // KEYBOARD NAVIGATION
+  // ============================================
+
+  // Arrow key navigation for filter buttons
+  const filterButtonsArray = Array.from(filterButtons);
+  filterButtons.forEach((button, index) => {
+    button.addEventListener('keydown', (event) => {
+      let newIndex = index;
+
+      if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+        event.preventDefault();
+        newIndex = (index + 1) % filterButtonsArray.length;
+      } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+        event.preventDefault();
+        newIndex = (index - 1 + filterButtonsArray.length) % filterButtonsArray.length;
+      }
+
+      if (newIndex !== index) {
+        (filterButtonsArray[newIndex] as HTMLElement).focus();
+      }
+    });
+  });
+
+  // ============================================
+  // URL HASH NAVIGATION
+  // ============================================
+
+  /**
+   * Handle initial category from URL hash
+   * Allows direct linking to filtered views (e.g., /gallery#kitchens)
+   */
+  function handleHashNavigation() {
+    const hash = window.location.hash.slice(1); // Remove '#'
+    if (hash) {
+      const matchingButton = Array.from(filterButtons).find(
+        (btn) => (btn as HTMLElement).dataset.filter === hash
+      );
+      if (matchingButton) {
+        updateActiveFilter(matchingButton as HTMLElement);
+        filterGallery(hash);
+      }
+    }
+  }
+
+  // Run on page load
+  handleHashNavigation();
+
+  // Listen for hash changes
+  window.addEventListener('hashchange', handleHashNavigation);
+</script>
+

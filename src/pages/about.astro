@@ -1,0 +1,643 @@
+---
+/**
+ * ABOUT PAGE
+ * Company information and story.
+ * 
+ * Sections:
+ * 1. Hero - Company name heading
+ * 2. Company Story - Mission and background
+ * 3. Why Choose Us - Key differentiators
+ * 4. Contact CTA - Quick contact buttons
+ */
+
+import Layout from '../layouts/Layout.astro';
+import { 
+  siteConfig, 
+  getWhatsAppLink, 
+  getEmailLink,
+  getYearsInBusiness 
+} from '../config.js';
+
+// Calculate years in business
+const yearsInBusiness = getYearsInBusiness();
+---
+
+<Layout 
+  title="About Us" 
+  description={`Learn about ${siteConfig.companyName}. ${siteConfig.business.description}`}
+>
+  <!-- ============================================
+       HERO SECTION
+       ============================================ -->
+  <section class="hero">
+    <div class="hero-background"></div>
+    <div class="hero-content">
+      <div class="container">
+        <h1 class="hero-title">{siteConfig.companyName}</h1>
+        <p class="hero-tagline">Crafting Quality Furniture Since {siteConfig.business.establishedYear}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       COMPANY STORY SECTION
+       ============================================ -->
+  <section class="story-section">
+    <div class="container">
+      <div class="story-content">
+        <header class="section-header">
+          <h2 class="section-title">Our Story</h2>
+          <div class="section-divider"></div>
+        </header>
+
+        <div class="story-text">
+          <!-- 
+            CUSTOMIZATION NOTE:
+            Edit this content to tell your company's unique story.
+            Replace the placeholder text below with your actual history.
+          -->
+          <p class="lead-text">
+            {siteConfig.business.description}
+          </p>
+
+          <p>
+            Founded in {siteConfig.business.establishedYear}, {siteConfig.companyName} began with a simple 
+            vision: to create beautiful, functional furniture that transforms houses into homes. 
+            What started as a small workshop has grown into a trusted name in custom furniture 
+            throughout Bosnia and Herzegovina.
+          </p>
+
+          <p>
+            Our journey has been driven by a passion for woodworking and an unwavering commitment 
+            to quality. Every piece we create tells a story—your story—crafted with precision, 
+            care, and the finest materials available.
+          </p>
+
+          <h3>Our Mission</h3>
+          <p>
+            We believe that quality furniture should be accessible to everyone. Our mission is to 
+            combine traditional craftsmanship with modern design, creating pieces that are not only 
+            beautiful but built to last for generations. We work closely with each client to 
+            understand their vision and bring it to life.
+          </p>
+
+          <h3>Why We Do This</h3>
+          <p>
+            There's something deeply satisfying about transforming raw wood into a functional work 
+            of art. We do this because we love seeing the joy on our clients' faces when they see 
+            their custom kitchen, their dream dining table, or the perfect wardrobe for their bedroom. 
+            Each project is a new opportunity to create something meaningful.
+          </p>
+
+          {yearsInBusiness > 0 && (
+            <p class="highlight-text">
+              With <strong>{yearsInBusiness} years of experience</strong>, we've completed hundreds 
+              of projects and built lasting relationships with clients who return to us time and again.
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       WHY CHOOSE US SECTION
+       ============================================ -->
+  <section class="why-section">
+    <div class="container">
+      <header class="section-header">
+        <h2 class="section-title">Why Choose Us</h2>
+        <p class="section-subtitle">
+          What sets us apart from the competition
+        </p>
+      </header>
+
+      <div class="differentiators-grid">
+        <!-- Differentiator 1 -->
+        <article class="differentiator-card">
+          <div class="differentiator-number">01</div>
+          <h3 class="differentiator-title">Premium Quality Materials</h3>
+          <p class="differentiator-text">
+            We source only the finest wood and materials from trusted suppliers. 
+            Every piece is carefully selected for durability, beauty, and sustainability.
+          </p>
+          <ul class="differentiator-list">
+            <li>Solid hardwood construction</li>
+            <li>Premium hardware and fittings</li>
+            <li>Eco-friendly finishes</li>
+          </ul>
+        </article>
+
+        <!-- Differentiator 2 -->
+        <article class="differentiator-card">
+          <div class="differentiator-number">02</div>
+          <h3 class="differentiator-title">100% Custom Design</h3>
+          <p class="differentiator-text">
+            No templates, no compromises. Every piece is designed specifically for 
+            your space, your needs, and your style preferences.
+          </p>
+          <ul class="differentiator-list">
+            <li>Free design consultation</li>
+            <li>3D visualization available</li>
+            <li>Unlimited revisions</li>
+          </ul>
+        </article>
+
+        <!-- Differentiator 3 -->
+        <article class="differentiator-card">
+          <div class="differentiator-number">03</div>
+          <h3 class="differentiator-title">Expert Craftsmanship</h3>
+          <p class="differentiator-text">
+            Our team of skilled craftsmen brings decades of combined experience 
+            to every project. Attention to detail is our signature.
+          </p>
+          <ul class="differentiator-list">
+            <li>Handcrafted precision</li>
+            <li>Traditional joinery techniques</li>
+            <li>Quality control at every step</li>
+          </ul>
+        </article>
+
+        <!-- Differentiator 4 -->
+        <article class="differentiator-card">
+          <div class="differentiator-number">04</div>
+          <h3 class="differentiator-title">Complete Service</h3>
+          <p class="differentiator-text">
+            From initial concept to final installation, we handle everything. 
+            Sit back and watch your vision become reality.
+          </p>
+          <ul class="differentiator-list">
+            <li>Professional installation</li>
+            <li>Warranty included</li>
+            <li>After-sales support</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       LOCATION SECTION
+       ============================================ -->
+  <section class="location-section">
+    <div class="container">
+      <div class="location-content">
+        <div class="location-info">
+          <h2 class="section-title">Visit Our Workshop</h2>
+          <p class="location-text">
+            We welcome visitors to our workshop by appointment. Come see our craftsmen at work 
+            and discuss your project in person.
+          </p>
+          <address class="location-address">
+            <span class="location-icon" aria-hidden="true">📍</span>
+            {siteConfig.address}
+          </address>
+          <p class="location-hours">
+            <span class="location-icon" aria-hidden="true">🕒</span>
+            {siteConfig.business.workingHours}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       CTA SECTION
+       ============================================ -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2 class="cta-title">Ready to Start Your Project?</h2>
+        <p class="cta-description">
+          Let's create something beautiful together. Contact us today for a free 
+          consultation and quote—no obligation, just great ideas.
+        </p>
+
+        <div class="cta-buttons">
+          <a 
+            href={getWhatsAppLink('Hello! I visited your About page and would like to discuss a project.')}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-whatsapp"
+          >
+            <span class="btn-icon" aria-hidden="true">💬</span>
+            WhatsApp Us
+          </a>
+
+          <a 
+            href={getEmailLink('Project Inquiry from About Page')}
+            class="btn btn-email"
+          >
+            <span class="btn-icon" aria-hidden="true">✉️</span>
+            Email Us
+          </a>
+
+          <a href="/contact" class="btn btn-outline">
+            Contact Page
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* ============================================
+     HERO SECTION
+     ============================================ */
+  .hero {
+    position: relative;
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      135deg,
+      var(--color-primary-dark) 0%,
+      var(--color-primary) 50%,
+      var(--color-accent) 100%
+    );
+    z-index: 0;
+  }
+
+  /* Optional: Add background image 
+  .hero-background {
+    background-image: url('/images/about-hero.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+  .hero-background::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  */
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    color: white;
+    padding: var(--space-48) 0;
+  }
+
+  .hero-title {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--space-16);
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .hero-tagline {
+    font-size: var(--font-size-xl);
+    color: rgba(255, 255, 255, 0.95);
+    margin: 0;
+  }
+
+  @media (min-width: 768px) {
+    .hero {
+      min-height: 60vh;
+    }
+    .hero-title {
+      font-size: var(--font-size-6xl);
+    }
+    .hero-tagline {
+      font-size: var(--font-size-2xl);
+    }
+  }
+
+  /* ============================================
+     SECTION COMMON STYLES
+     ============================================ */
+  .story-section,
+  .why-section,
+  .location-section {
+    padding: var(--space-64) 0;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: var(--space-48);
+  }
+
+  .section-title {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--space-16);
+    color: var(--color-text);
+  }
+
+  .section-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .section-divider {
+    width: 80px;
+    height: 4px;
+    background-color: var(--color-primary);
+    margin: var(--space-24) auto 0;
+    border-radius: var(--radius-full);
+  }
+
+  /* ============================================
+     STORY SECTION
+     ============================================ */
+  .story-section {
+    background-color: var(--color-bg);
+  }
+
+  .story-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .story-text p {
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-24);
+  }
+
+  .story-text h3 {
+    font-size: var(--font-size-xl);
+    color: var(--color-text);
+    margin-top: var(--space-40);
+    margin-bottom: var(--space-16);
+  }
+
+  .lead-text {
+    font-size: var(--font-size-xl) !important;
+    color: var(--color-text) !important;
+    font-weight: var(--font-weight-medium);
+  }
+
+  .highlight-text {
+    background-color: var(--color-bg-secondary);
+    padding: var(--space-24);
+    border-left: 4px solid var(--color-primary);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    font-style: italic;
+  }
+
+  /* ============================================
+     WHY CHOOSE US SECTION
+     ============================================ */
+  .why-section {
+    background-color: var(--color-bg-secondary);
+  }
+
+  .differentiators-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-32);
+  }
+
+  @media (min-width: 768px) {
+    .differentiators-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .differentiator-card {
+    background-color: var(--color-bg);
+    padding: var(--space-32);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-base);
+  }
+
+  .differentiator-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+  }
+
+  .differentiator-number {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    opacity: 0.3;
+    margin-bottom: var(--space-8);
+    line-height: 1;
+  }
+
+  .differentiator-title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+    margin-bottom: var(--space-12);
+  }
+
+  .differentiator-text {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+    margin-bottom: var(--space-16);
+  }
+
+  .differentiator-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .differentiator-list li {
+    position: relative;
+    padding-left: var(--space-24);
+    margin-bottom: var(--space-8);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+  }
+
+  .differentiator-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+    font-weight: var(--font-weight-bold);
+  }
+
+  /* ============================================
+     LOCATION SECTION
+     ============================================ */
+  .location-section {
+    background-color: var(--color-bg);
+  }
+
+  .location-content {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .location-text {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-32);
+  }
+
+  .location-address,
+  .location-hours {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-12);
+    font-size: var(--font-size-lg);
+    color: var(--color-text);
+    font-style: normal;
+    margin-bottom: var(--space-12);
+  }
+
+  .location-icon {
+    font-size: var(--font-size-2xl);
+  }
+
+  /* ============================================
+     CTA SECTION
+     ============================================ */
+  .cta-section {
+    background: linear-gradient(
+      135deg,
+      var(--color-primary-dark) 0%,
+      var(--color-primary) 100%
+    );
+    padding: var(--space-64) 0;
+  }
+
+  .cta-content {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .cta-title {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--space-16);
+    color: white;
+  }
+
+  .cta-description {
+    font-size: var(--font-size-lg);
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: var(--space-32);
+  }
+
+  .cta-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16);
+    align-items: center;
+  }
+
+  @media (min-width: 640px) {
+    .cta-buttons {
+      flex-direction: row;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  }
+
+  /* ============================================
+     BUTTONS
+     ============================================ */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-8);
+    padding: var(--space-16) var(--space-32);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-base);
+    cursor: pointer;
+    border: 2px solid transparent;
+    min-height: 48px;
+    min-width: 180px;
+  }
+
+  .btn-whatsapp {
+    background-color: #25D366;
+    color: white;
+  }
+
+  .btn-whatsapp:hover {
+    background-color: #20BA5A;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    text-decoration: none;
+  }
+
+  .btn-email {
+    background-color: white;
+    color: var(--color-primary);
+  }
+
+  .btn-email:hover {
+    background-color: var(--color-bg-secondary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    text-decoration: none;
+  }
+
+  .btn-outline {
+    background-color: transparent;
+    color: white;
+    border-color: white;
+  }
+
+  .btn-outline:hover {
+    background-color: white;
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .btn-icon {
+    font-size: var(--font-size-xl);
+  }
+
+  .btn:focus {
+    outline: 3px solid white;
+    outline-offset: 2px;
+  }
+
+  /* ============================================
+     ACCESSIBILITY & REDUCED MOTION
+     ============================================ */
+  @media (prefers-reduced-motion: reduce) {
+    .differentiator-card,
+    .btn {
+      transition: none;
+    }
+  }
+
+  /* ============================================
+     DARK MODE
+     ============================================ */
+  @media (prefers-color-scheme: dark) {
+    .differentiator-card {
+      background-color: var(--color-bg-secondary);
+    }
+    
+    .highlight-text {
+      background-color: var(--color-bg-tertiary);
+    }
+  }
+</style>
+
