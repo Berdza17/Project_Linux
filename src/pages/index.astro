@@ -14,80 +14,79 @@ import Layout from '../layouts/Layout.astro';
 import LazyImage from '../components/LazyImage.astro';
 import { siteConfig, getWhatsAppLink, getEmailLink } from '../config.js';
 
-// Featured products data (using placeholder images)
-// In production, these would come from a CMS or database
+// Istaknuti proizvodi (sa placeholder slikama)
 const featuredProducts = [
   {
     id: 1,
-    title: 'Modern Kitchen',
-    category: 'Kitchens',
+    title: 'Moderna Kuhinja',
+    category: 'Kuhinje',
     image: '/images/products/kitchen-1',
     link: '/gallery#kitchens'
   },
   {
     id: 2,
-    title: 'Dining Table Set',
-    category: 'Tables',
+    title: 'Trpezarijski Set',
+    category: 'Stolovi',
     image: '/images/products/table-1',
     link: '/gallery#tables'
   },
   {
     id: 3,
-    title: 'Entertainment Center',
-    category: 'TV Stands',
+    title: 'Entertainment Centar',
+    category: 'TV Komode',
     image: '/images/products/tv-stand-1',
     link: '/gallery#tv-stands'
   },
   {
     id: 4,
-    title: 'Walk-in Wardrobe',
-    category: 'Wardrobes',
+    title: 'Garderober',
+    category: 'Ormari',
     image: '/images/products/wardrobe-1',
     link: '/gallery#wardrobes'
   },
   {
     id: 5,
-    title: 'Custom Shelving',
-    category: 'Storage',
+    title: 'Police za Knjige',
+    category: 'Skladištenje',
     image: '/images/products/shelving-1',
     link: '/gallery#storage'
   },
   {
     id: 6,
-    title: 'Office Furniture',
-    category: 'Office',
+    title: 'Kancelarijski Namještaj',
+    category: 'Kancelarija',
     image: '/images/products/office-1',
     link: '/gallery#office'
   }
 ];
 
-// Why Choose Us features
+// Zašto izabrati nas
 const features = [
   {
     icon: '🌳',
-    title: 'Premium Materials',
-    description: 'We use only the finest wood and materials, ensuring durability and timeless beauty in every piece.'
+    title: 'Premium Materijali',
+    description: 'Koristimo samo najkvalitetnije drvo i materijale, osiguravajući trajnost i bezvremensku ljepotu u svakom komadu.'
   },
   {
     icon: '✨',
-    title: 'Custom Design',
-    description: 'Every project is tailored to your exact specifications, space, and style preferences.'
+    title: 'Prilagođeni Dizajn',
+    description: 'Svaki projekat je prilagođen vašim tačnim specifikacijama, prostoru i stilskim preferencijama.'
   },
   {
     icon: '🔨',
-    title: 'Expert Craftsmanship',
-    description: 'Years of experience and attention to detail in every cut, joint, and finish.'
+    title: 'Stručna Izrada',
+    description: 'Godine iskustva i pažnja na detalje u svakom rezu, spoju i završnoj obradi.'
   },
   {
     icon: '💯',
-    title: 'Quality Guarantee',
-    description: 'We stand behind our work with comprehensive warranties and excellent after-sales support.'
+    title: 'Garancija Kvaliteta',
+    description: 'Stojimo iza našeg rada sa sveobuhvatnim garancijama i odličnom postprodajnom podrškom.'
   }
 ];
 ---
 
 <Layout 
-  title="Home" 
+  title="Početna" 
   description={siteConfig.seo.description}
 >
   <!-- ============================================
@@ -121,10 +120,10 @@ const features = [
         <!-- CTA Buttons -->
         <div class="hero-buttons">
           <a href="/gallery" class="btn btn-primary">
-            View Gallery
+            Pogledaj Galeriju
           </a>
           <a href="/contact" class="btn btn-secondary">
-            Contact Us
+            Kontaktirajte Nas
           </a>
         </div>
       </div>
@@ -137,9 +136,9 @@ const features = [
   <section class="featured-products">
     <div class="container">
       <header class="section-header">
-        <h2 class="section-title">Our Specialties</h2>
+        <h2 class="section-title">Naše Specijalnosti</h2>
         <p class="section-description">
-          Browse our most popular furniture categories and find inspiration for your next project.
+          Pregledajte naše najpopularnije kategorije namještaja i pronađite inspiraciju za vaš sljedeći projekat.
         </p>
       </header>
 
@@ -156,7 +155,7 @@ const features = [
                   class="product-img"
                 />
                 <div class="product-overlay">
-                  <span class="product-overlay-text">View More</span>
+                  <span class="product-overlay-text">Pogledaj Više</span>
                 </div>
               </div>
               <div class="product-info">
@@ -170,7 +169,7 @@ const features = [
 
       <div class="section-cta">
         <a href="/gallery" class="btn btn-outline">
-          View Full Gallery
+          Pogledaj Cijelu Galeriju
         </a>
       </div>
     </div>
@@ -182,9 +181,9 @@ const features = [
   <section class="why-choose-us">
     <div class="container">
       <header class="section-header">
-        <h2 class="section-title">Why Choose Us</h2>
+        <h2 class="section-title">Zašto Izabrati Nas</h2>
         <p class="section-description">
-          Quality craftsmanship and customer satisfaction are at the heart of everything we do.
+          Kvalitetna izrada i zadovoljstvo kupaca su u srcu svega što radimo.
         </p>
       </header>
 
@@ -206,31 +205,31 @@ const features = [
   <section class="cta-section">
     <div class="container">
       <div class="cta-content">
-        <h2 class="cta-title">Ready to Start Your Project?</h2>
+        <h2 class="cta-title">Spremni da Započnete Vaš Projekat?</h2>
         <p class="cta-description">
-          Get in touch with us today for a free consultation and quote. We're here to bring your vision to life.
+          Kontaktirajte nas danas za besplatne konsultacije i ponudu. Tu smo da oživimo vašu viziju.
         </p>
 
         <!-- Contact buttons -->
         <div class="cta-buttons">
           <!-- WhatsApp button -->
           <a 
-            href={getWhatsAppLink('Hello! I would like to inquire about your furniture.')}
+            href={getWhatsAppLink('Zdravo! Želim se raspitati o vašem namještaju.')}
             target="_blank"
             rel="noopener noreferrer"
             class="btn btn-whatsapp"
           >
             <span class="btn-icon" aria-hidden="true">💬</span>
-            WhatsApp Us
+            WhatsApp
           </a>
 
           <!-- Email button -->
           <a 
-            href={getEmailLink('Furniture Inquiry')}
+            href={getEmailLink('Upit za Namještaj')}
             class="btn btn-email"
           >
             <span class="btn-icon" aria-hidden="true">✉️</span>
-            Email Us
+            Email
           </a>
 
           <!-- Phone button (for mobile) -->
@@ -239,13 +238,13 @@ const features = [
             class="btn btn-phone"
           >
             <span class="btn-icon" aria-hidden="true">📞</span>
-            Call Us
+            Pozovite Nas
           </a>
         </div>
 
         <!-- Additional contact info -->
         <p class="cta-info">
-          Or visit us at: <strong>{siteConfig.address}</strong>
+          Ili nas posjetite na adresi: <strong>{siteConfig.address}</strong>
         </p>
       </div>
     </div>

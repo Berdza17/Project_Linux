@@ -25,15 +25,15 @@ const formName = 'contact-form'; // Used by Netlify Forms
 ---
 
 <Layout 
-  title="Contact Us" 
-  description={`Get in touch with ${siteConfig.companyName}. Request a free quote for custom furniture. Phone: ${siteConfig.phone}`}
+  title="Kontakt" 
+  description={`Kontaktirajte ${siteConfig.companyName}. Zatražite besplatnu ponudu za prilagođeni namještaj. Telefon: ${siteConfig.phone}`}
 >
   <!-- Page Header -->
   <section class="page-header">
     <div class="container">
-      <h1 class="page-title">Contact Us</h1>
+      <h1 class="page-title">Kontaktirajte Nas</h1>
       <p class="page-description">
-        Ready to start your project? Get in touch for a free consultation and quote.
+        Spremni za početak vašeg projekta? Javite nam se za besplatne konsultacije i ponudu.
       </p>
     </div>
   </section>
@@ -45,7 +45,7 @@ const formName = 'contact-form'; // Used by Netlify Forms
         
         <!-- Contact Form -->
         <div class="contact-form-wrapper">
-          <h2 class="section-title">Send Us a Message</h2>
+          <h2 class="section-title">Pošaljite Nam Poruku</h2>
           
           <!-- Netlify Forms: Add data-netlify="true" for Netlify hosting -->
           <!-- Formspree: Replace action with your Formspree endpoint -->
@@ -68,14 +68,14 @@ const formName = 'contact-form'; // Used by Netlify Forms
             <!-- Name Field -->
             <div class="form-group">
               <label for="name" class="form-label">
-                Full Name <span class="required" aria-hidden="true">*</span>
+                Ime i Prezime <span class="required" aria-hidden="true">*</span>
               </label>
               <input
                 type="text"
                 id="name"
                 name="name"
                 class="form-input"
-                placeholder="Your full name"
+                placeholder="Vaše puno ime"
                 required
                 autocomplete="name"
                 aria-required="true"
@@ -86,14 +86,14 @@ const formName = 'contact-form'; // Used by Netlify Forms
             <!-- Email Field -->
             <div class="form-group">
               <label for="email" class="form-label">
-                Email Address <span class="required" aria-hidden="true">*</span>
+                Email Adresa <span class="required" aria-hidden="true">*</span>
               </label>
               <input
                 type="email"
                 id="email"
                 name="email"
                 class="form-input"
-                placeholder="your@email.com"
+                placeholder="vas@email.com"
                 required
                 autocomplete="email"
                 aria-required="true"
@@ -104,7 +104,7 @@ const formName = 'contact-form'; // Used by Netlify Forms
             <!-- Phone Field -->
             <div class="form-group">
               <label for="phone" class="form-label">
-                Phone Number <span class="required" aria-hidden="true">*</span>
+                Broj Telefona <span class="required" aria-hidden="true">*</span>
               </label>
               <input
                 type="tel"
@@ -122,13 +122,13 @@ const formName = 'contact-form'; // Used by Netlify Forms
             <!-- Message Field -->
             <div class="form-group">
               <label for="message" class="form-label">
-                Your Message <span class="required" aria-hidden="true">*</span>
+                Vaša Poruka <span class="required" aria-hidden="true">*</span>
               </label>
               <textarea
                 id="message"
                 name="message"
                 class="form-input form-textarea"
-                placeholder="Tell us about your project: what type of furniture, dimensions, materials, etc."
+                placeholder="Recite nam o vašem projektu: vrsta namještaja, dimenzije, materijali, itd."
                 rows="5"
                 required
                 aria-required="true"
@@ -139,8 +139,8 @@ const formName = 'contact-form'; // Used by Netlify Forms
             <!-- Submit Button -->
             <div class="form-group">
               <button type="submit" class="btn btn-primary btn-submit" id="submit-btn">
-                <span class="btn-text">Send Message</span>
-                <span class="btn-loading" aria-hidden="true">Sending...</span>
+                <span class="btn-text">Pošalji Poruku</span>
+                <span class="btn-loading" aria-hidden="true">Slanje...</span>
               </button>
             </div>
 
@@ -148,16 +148,16 @@ const formName = 'contact-form'; // Used by Netlify Forms
             <div id="form-success" class="form-message form-success" hidden>
               <span class="message-icon" aria-hidden="true">✅</span>
               <div>
-                <strong>Message Sent!</strong>
-                <p>Thank you for contacting us. We'll get back to you within 24 hours.</p>
+                <strong>Poruka Poslana!</strong>
+                <p>Hvala vam na kontaktu. Javit ćemo vam se u roku od 24 sata.</p>
               </div>
             </div>
 
             <div id="form-error" class="form-message form-error-message" hidden>
               <span class="message-icon" aria-hidden="true">❌</span>
               <div>
-                <strong>Something went wrong</strong>
-                <p>Please try again or contact us directly via phone or email.</p>
+                <strong>Nešto je pošlo naopako</strong>
+                <p>Molimo pokušajte ponovo ili nas kontaktirajte direktno putem telefona ili emaila.</p>
               </div>
             </div>
           </form>
@@ -165,18 +165,18 @@ const formName = 'contact-form'; // Used by Netlify Forms
 
         <!-- Contact Information -->
         <div class="contact-info-wrapper">
-          <h2 class="section-title">Get In Touch</h2>
+          <h2 class="section-title">Stupite u Kontakt</h2>
           
           <div class="contact-info">
             <!-- Phone -->
             <div class="contact-item">
               <div class="contact-icon" aria-hidden="true">📞</div>
               <div class="contact-details">
-                <h3 class="contact-label">Phone</h3>
+                <h3 class="contact-label">Telefon</h3>
                 <a href={getPhoneLink()} class="contact-link">
                   {siteConfig.phone}
                 </a>
-                <p class="contact-note">Call us during business hours</p>
+                <p class="contact-note">Pozovite nas tokom radnog vremena</p>
               </div>
             </div>
 
@@ -186,14 +186,14 @@ const formName = 'contact-form'; // Used by Netlify Forms
               <div class="contact-details">
                 <h3 class="contact-label">WhatsApp</h3>
                 <a 
-                  href={getWhatsAppLink('Hello! I would like to inquire about your furniture.')}
+                  href={getWhatsAppLink('Zdravo! Želim se raspitati o vašem namještaju.')}
                   target="_blank"
                   rel="noopener noreferrer"
                   class="contact-link"
                 >
-                  Chat with us
+                  Pišite nam
                 </a>
-                <p class="contact-note">Quick responses, available anytime</p>
+                <p class="contact-note">Brzi odgovori, dostupni uvijek</p>
               </div>
             </div>
 
@@ -202,10 +202,10 @@ const formName = 'contact-form'; // Used by Netlify Forms
               <div class="contact-icon" aria-hidden="true">✉️</div>
               <div class="contact-details">
                 <h3 class="contact-label">Email</h3>
-                <a href={getEmailLink('Furniture Inquiry')} class="contact-link">
+                <a href={getEmailLink('Upit za Namještaj')} class="contact-link">
                   {siteConfig.email}
                 </a>
-                <p class="contact-note">We respond within 24 hours</p>
+                <p class="contact-note">Odgovaramo u roku od 24 sata</p>
               </div>
             </div>
 
@@ -213,11 +213,11 @@ const formName = 'contact-form'; // Used by Netlify Forms
             <div class="contact-item">
               <div class="contact-icon" aria-hidden="true">📍</div>
               <div class="contact-details">
-                <h3 class="contact-label">Visit Us</h3>
+                <h3 class="contact-label">Posjetite Nas</h3>
                 <address class="contact-address">
                   {siteConfig.address}
                 </address>
-                <p class="contact-note">By appointment only</p>
+                <p class="contact-note">Samo uz prethodnu najavu</p>
               </div>
             </div>
 
@@ -225,9 +225,9 @@ const formName = 'contact-form'; // Used by Netlify Forms
             <div class="contact-item">
               <div class="contact-icon" aria-hidden="true">🕒</div>
               <div class="contact-details">
-                <h3 class="contact-label">Business Hours</h3>
+                <h3 class="contact-label">Radno Vrijeme</h3>
                 <p class="contact-hours">{siteConfig.business.workingHours}</p>
-                <p class="contact-note">Closed on weekends and holidays</p>
+                <p class="contact-note">Zatvoreno vikendom i praznicima</p>
               </div>
             </div>
           </div>
@@ -235,17 +235,17 @@ const formName = 'contact-form'; // Used by Netlify Forms
           <!-- Quick Action Buttons -->
           <div class="quick-actions">
             <a 
-              href={getWhatsAppLink('Hello! I would like to inquire about your furniture.')}
+              href={getWhatsAppLink('Zdravo! Želim se raspitati o vašem namještaju.')}
               target="_blank"
               rel="noopener noreferrer"
               class="btn btn-whatsapp"
             >
               <span class="btn-icon" aria-hidden="true">💬</span>
-              WhatsApp Us
+              WhatsApp
             </a>
             <a href={getPhoneLink()} class="btn btn-phone">
               <span class="btn-icon" aria-hidden="true">📞</span>
-              Call Now
+              Pozovite Nas
             </a>
           </div>
         </div>
@@ -258,8 +258,8 @@ const formName = 'contact-form'; // Used by Netlify Forms
     <div class="container">
       <div class="map-placeholder">
         <span class="map-icon" aria-hidden="true">🗺️</span>
-        <p>Map would go here</p>
-        <p class="map-note">Add Google Maps embed or static map image</p>
+        <p>Mapa bi bila ovdje</p>
+        <p class="map-note">Dodajte Google Maps embed ili statičnu sliku mape</p>
       </div>
     </div>
   </section>
@@ -718,12 +718,12 @@ const formName = 'contact-form'; // Used by Netlify Forms
     const value = nameField.value.trim();
     
     if (!value) {
-      showError(nameField, nameError, 'Please enter your name');
+      showError(nameField, nameError, 'Molimo unesite vaše ime');
       return false;
     }
     
     if (value.length < 2) {
-      showError(nameField, nameError, 'Name must be at least 2 characters');
+      showError(nameField, nameError, 'Ime mora imati najmanje 2 karaktera');
       return false;
     }
     
@@ -741,12 +741,12 @@ const formName = 'contact-form'; // Used by Netlify Forms
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     
     if (!value) {
-      showError(emailField, emailError, 'Please enter your email');
+      showError(emailField, emailError, 'Molimo unesite vaš email');
       return false;
     }
     
     if (!emailRegex.test(value)) {
-      showError(emailField, emailError, 'Please enter a valid email address');
+      showError(emailField, emailError, 'Molimo unesite ispravnu email adresu');
       return false;
     }
     
@@ -764,12 +764,12 @@ const formName = 'contact-form'; // Used by Netlify Forms
     const phoneRegex = /^[\d\s\-\(\)\+]{6,20}$/;
     
     if (!value) {
-      showError(phoneField, phoneError, 'Please enter your phone number');
+      showError(phoneField, phoneError, 'Molimo unesite vaš broj telefona');
       return false;
     }
     
     if (!phoneRegex.test(value)) {
-      showError(phoneField, phoneError, 'Please enter a valid phone number');
+      showError(phoneField, phoneError, 'Molimo unesite ispravan broj telefona');
       return false;
     }
     
@@ -785,12 +785,12 @@ const formName = 'contact-form'; // Used by Netlify Forms
     const value = messageField.value.trim();
     
     if (!value) {
-      showError(messageField, messageError, 'Please enter your message');
+      showError(messageField, messageError, 'Molimo unesite vašu poruku');
       return false;
     }
     
     if (value.length < 10) {
-      showError(messageField, messageError, 'Message must be at least 10 characters');
+      showError(messageField, messageError, 'Poruka mora imati najmanje 10 karaktera');
       return false;
     }
     

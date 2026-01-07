@@ -15,185 +15,184 @@ import Layout from '../layouts/Layout.astro';
 import LazyImage from '../components/LazyImage.astro';
 import { siteConfig } from '../config.js';
 
-// Product categories for filter buttons
+// Kategorije proizvoda za filter dugmad
 const categories = [
-  { id: 'all', label: 'All' },
-  { id: 'kitchens', label: 'Kitchens' },
-  { id: 'tables', label: 'Living Room Tables' },
-  { id: 'tv-stands', label: 'TV Stands' },
-  { id: 'wardrobes', label: 'Wardrobes' },
+  { id: 'all', label: 'Sve' },
+  { id: 'kitchens', label: 'Kuhinje' },
+  { id: 'tables', label: 'Stolovi' },
+  { id: 'tv-stands', label: 'TV Komode' },
+  { id: 'wardrobes', label: 'Ormari' },
 ];
 
-// Mock product data (20+ items)
-// In production, this would come from a CMS or database
+// Podaci o proizvodima
 const products = [
-  // Kitchens (5 items)
+  // Kuhinje (5 items)
   {
     id: 1,
-    title: 'Modern White Kitchen',
+    title: 'Moderna Bijela Kuhinja',
     category: 'kitchens',
     image: '/images/gallery/kitchen-1',
-    alt: 'Modern white kitchen with wooden accents'
+    alt: 'Moderna bijela kuhinja sa drvenim detaljima'
   },
   {
     id: 2,
-    title: 'Classic Oak Kitchen',
+    title: 'Klasična Hrastova Kuhinja',
     category: 'kitchens',
     image: '/images/gallery/kitchen-2',
-    alt: 'Classic oak wood kitchen cabinets'
+    alt: 'Klasični hrastovi kuhinjski elementi'
   },
   {
     id: 3,
-    title: 'Minimalist Kitchen Design',
+    title: 'Minimalistički Dizajn Kuhinje',
     category: 'kitchens',
     image: '/images/gallery/kitchen-3',
-    alt: 'Minimalist kitchen with clean lines'
+    alt: 'Minimalistička kuhinja sa čistim linijama'
   },
   {
     id: 4,
-    title: 'Rustic Farmhouse Kitchen',
+    title: 'Rustična Kuhinja',
     category: 'kitchens',
     image: '/images/gallery/kitchen-4',
-    alt: 'Rustic farmhouse style kitchen'
+    alt: 'Rustična kuhinja u seoskom stilu'
   },
   {
     id: 5,
-    title: 'Contemporary Kitchen',
+    title: 'Savremena Kuhinja',
     category: 'kitchens',
     image: '/images/gallery/kitchen-5',
-    alt: 'Contemporary kitchen with island'
+    alt: 'Savremena kuhinja sa ostrvom'
   },
 
-  // Living Room Tables (5 items)
+  // Stolovi (5 items)
   {
     id: 6,
-    title: 'Solid Oak Dining Table',
+    title: 'Hrastov Trpezarijski Sto',
     category: 'tables',
     image: '/images/gallery/table-1',
-    alt: 'Solid oak dining table for 8 people'
+    alt: 'Masivni hrastov trpezarijski sto za 8 osoba'
   },
   {
     id: 7,
-    title: 'Coffee Table Set',
+    title: 'Set Stolića za Kafu',
     category: 'tables',
     image: '/images/gallery/table-2',
-    alt: 'Wooden coffee table set'
+    alt: 'Drveni set stolića za kafu'
   },
   {
     id: 8,
-    title: 'Extendable Dining Table',
+    title: 'Rastegljivi Trpezarijski Sto',
     category: 'tables',
     image: '/images/gallery/table-3',
-    alt: 'Extendable dining table in walnut'
+    alt: 'Rastegljivi trpezarijski sto od oraha'
   },
   {
     id: 9,
-    title: 'Round Coffee Table',
+    title: 'Okrugli Stolić za Kafu',
     category: 'tables',
     image: '/images/gallery/table-4',
-    alt: 'Round wooden coffee table'
+    alt: 'Okrugli drveni stolić za kafu'
   },
   {
     id: 10,
-    title: 'Console Table',
+    title: 'Konzolni Sto',
     category: 'tables',
     image: '/images/gallery/table-5',
-    alt: 'Entryway console table'
+    alt: 'Konzolni sto za hodnik'
   },
 
-  // TV Stands (5 items)
+  // TV Komode (5 items)
   {
     id: 11,
-    title: 'Floating TV Unit',
+    title: 'Viseća TV Komoda',
     category: 'tv-stands',
     image: '/images/gallery/tv-stand-1',
-    alt: 'Floating TV unit with LED lighting'
+    alt: 'Viseća TV komoda sa LED osvjetljenjem'
   },
   {
     id: 12,
-    title: 'Entertainment Center',
+    title: 'Entertainment Centar',
     category: 'tv-stands',
     image: '/images/gallery/tv-stand-2',
-    alt: 'Full wall entertainment center'
+    alt: 'Entertainment centar za cijeli zid'
   },
   {
     id: 13,
-    title: 'Minimalist TV Stand',
+    title: 'Minimalistička TV Komoda',
     category: 'tv-stands',
     image: '/images/gallery/tv-stand-3',
-    alt: 'Minimalist low TV stand'
+    alt: 'Minimalistička niska TV komoda'
   },
   {
     id: 14,
-    title: 'Corner TV Unit',
+    title: 'Ugaona TV Komoda',
     category: 'tv-stands',
     image: '/images/gallery/tv-stand-4',
-    alt: 'Corner TV unit with storage'
+    alt: 'Ugaona TV komoda sa prostorom za odlaganje'
   },
   {
     id: 15,
-    title: 'Modern Media Console',
+    title: 'Moderna Medijska Konzola',
     category: 'tv-stands',
     image: '/images/gallery/tv-stand-5',
-    alt: 'Modern media console in oak'
+    alt: 'Moderna medijska konzola od hrasta'
   },
 
-  // Wardrobes (6 items)
+  // Ormari (6 items)
   {
     id: 16,
-    title: 'Walk-in Wardrobe',
+    title: 'Garderober',
     category: 'wardrobes',
     image: '/images/gallery/wardrobe-1',
-    alt: 'Custom walk-in wardrobe'
+    alt: 'Prilagođeni garderober'
   },
   {
     id: 17,
-    title: 'Sliding Door Wardrobe',
+    title: 'Ormar sa Kliznim Vratima',
     category: 'wardrobes',
     image: '/images/gallery/wardrobe-2',
-    alt: 'Sliding door wardrobe with mirror'
+    alt: 'Ormar sa kliznim vratima i ogledalom'
   },
   {
     id: 18,
-    title: 'Built-in Closet System',
+    title: 'Ugradbeni Plakar',
     category: 'wardrobes',
     image: '/images/gallery/wardrobe-3',
-    alt: 'Built-in closet organization system'
+    alt: 'Ugradbeni sistem za organizaciju'
   },
   {
     id: 19,
-    title: 'Classic Wardrobe',
+    title: 'Klasični Ormar',
     category: 'wardrobes',
     image: '/images/gallery/wardrobe-4',
-    alt: 'Classic wooden wardrobe'
+    alt: 'Klasični drveni ormar'
   },
   {
     id: 20,
-    title: 'Bedroom Wardrobe Set',
+    title: 'Spavaći Set Ormara',
     category: 'wardrobes',
     image: '/images/gallery/wardrobe-5',
-    alt: 'Complete bedroom wardrobe set'
+    alt: 'Kompletan set ormara za spavaću sobu'
   },
   {
     id: 21,
-    title: 'Open Concept Closet',
+    title: 'Otvoreni Plakar',
     category: 'wardrobes',
     image: '/images/gallery/wardrobe-6',
-    alt: 'Open concept closet design'
+    alt: 'Dizajn otvorenog plakara'
   },
 ];
 ---
 
 <Layout 
-  title="Gallery" 
-  description={`Browse our portfolio of custom furniture: kitchens, tables, TV stands, and wardrobes. ${siteConfig.companyName}`}
+  title="Galerija" 
+  description={`Pregledajte naš portfolio prilagođenog namještaja: kuhinje, stolovi, TV komode i ormari. ${siteConfig.companyName}`}
 >
   <!-- Page Header -->
   <section class="page-header">
     <div class="container">
-      <h1 class="page-title">Our Gallery</h1>
+      <h1 class="page-title">Naša Galerija</h1>
       <p class="page-description">
-        Browse our portfolio of handcrafted furniture. Each piece is custom-made with attention to detail and quality materials.
+        Pregledajte naš portfolio ručno izrađenog namještaja. Svaki komad je prilagođen sa pažnjom na detalje i kvalitetnim materijalima.
       </p>
     </div>
   </section>
@@ -229,7 +228,7 @@ const products = [
           >
             <button 
               class="gallery-item-btn"
-              aria-label={`View ${product.title} in full size`}
+              aria-label={`Pogledaj ${product.title} u punoj veličini`}
               data-image={`${product.image}.jpg`}
               data-title={product.title}
               data-alt={product.alt}
@@ -257,7 +256,7 @@ const products = [
 
       <!-- Empty state (shown when no products match filter) -->
       <div class="gallery-empty" id="gallery-empty" hidden>
-        <p>No products found in this category.</p>
+        <p>Nema proizvoda u ovoj kategoriji.</p>
       </div>
     </div>
   </section>
@@ -285,11 +284,11 @@ const products = [
   <!-- CTA Section -->
   <section class="gallery-cta">
     <div class="container">
-      <h2 class="cta-title">Like What You See?</h2>
+      <h2 class="cta-title">Sviđa Vam Se Ono Što Vidite?</h2>
       <p class="cta-description">
-        Every piece is custom-made to your specifications. Contact us to discuss your project.
+        Svaki komad je prilagođen vašim specifikacijama. Kontaktirajte nas da razgovaramo o vašem projektu.
       </p>
-      <a href="/contact" class="btn btn-primary">Get a Free Quote</a>
+      <a href="/contact" class="btn btn-primary">Zatražite Besplatnu Ponudu</a>
     </div>
   </section>
 </Layout>

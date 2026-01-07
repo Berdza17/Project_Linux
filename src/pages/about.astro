@@ -23,8 +23,8 @@ const yearsInBusiness = getYearsInBusiness();
 ---
 
 <Layout 
-  title="About Us" 
-  description={`Learn about ${siteConfig.companyName}. ${siteConfig.business.description}`}
+  title="O Nama" 
+  description={`Saznajte više o ${siteConfig.companyName}. ${siteConfig.business.description}`}
 >
   <!-- ============================================
        HERO SECTION
@@ -34,7 +34,7 @@ const yearsInBusiness = getYearsInBusiness();
     <div class="hero-content">
       <div class="container">
         <h1 class="hero-title">{siteConfig.companyName}</h1>
-        <p class="hero-tagline">Crafting Quality Furniture Since {siteConfig.business.establishedYear}</p>
+        <p class="hero-tagline">Izrađujemo Kvalitetan Namještaj Od {siteConfig.business.establishedYear}</p>
       </div>
     </div>
   </section>
@@ -46,53 +46,52 @@ const yearsInBusiness = getYearsInBusiness();
     <div class="container">
       <div class="story-content">
         <header class="section-header">
-          <h2 class="section-title">Our Story</h2>
+          <h2 class="section-title">Naša Priča</h2>
           <div class="section-divider"></div>
         </header>
 
         <div class="story-text">
           <!-- 
-            CUSTOMIZATION NOTE:
-            Edit this content to tell your company's unique story.
-            Replace the placeholder text below with your actual history.
+            NAPOMENA ZA PRILAGOĐAVANJE:
+            Uredite ovaj sadržaj da ispričate jedinstvenu priču vaše firme.
           -->
           <p class="lead-text">
             {siteConfig.business.description}
           </p>
 
           <p>
-            Founded in {siteConfig.business.establishedYear}, {siteConfig.companyName} began with a simple 
-            vision: to create beautiful, functional furniture that transforms houses into homes. 
-            What started as a small workshop has grown into a trusted name in custom furniture 
-            throughout Bosnia and Herzegovina.
+            Osnovana {siteConfig.business.establishedYear}. godine, {siteConfig.companyName} je započela sa jednostavnom 
+            vizijom: kreirati lijep, funkcionalan namještaj koji kuće pretvara u domove. 
+            Ono što je počelo kao mala radionica preraslo je u pouzdano ime u prilagođenom namještaju 
+            širom Bosne i Hercegovine.
           </p>
 
           <p>
-            Our journey has been driven by a passion for woodworking and an unwavering commitment 
-            to quality. Every piece we create tells a story—your story—crafted with precision, 
-            care, and the finest materials available.
+            Naše putovanje vodi strast prema obradi drveta i nepokolebljiva posvećenost 
+            kvaliteti. Svaki komad koji kreiramo priča priču—vašu priču—izrađenu s preciznošću, 
+            pažnjom i najboljim dostupnim materijalima.
           </p>
 
-          <h3>Our Mission</h3>
+          <h3>Naša Misija</h3>
           <p>
-            We believe that quality furniture should be accessible to everyone. Our mission is to 
-            combine traditional craftsmanship with modern design, creating pieces that are not only 
-            beautiful but built to last for generations. We work closely with each client to 
-            understand their vision and bring it to life.
+            Vjerujemo da kvalitetan namještaj treba biti dostupan svima. Naša misija je 
+            kombinirati tradicionalnu izradu sa modernim dizajnom, kreirajući komade koji nisu samo 
+            lijepi već izgrađeni da traju generacijama. Radimo blisko sa svakim klijentom da 
+            razumijemo njihovu viziju i oživimo je.
           </p>
 
-          <h3>Why We Do This</h3>
+          <h3>Zašto Radimo Ovo</h3>
           <p>
-            There's something deeply satisfying about transforming raw wood into a functional work 
-            of art. We do this because we love seeing the joy on our clients' faces when they see 
-            their custom kitchen, their dream dining table, or the perfect wardrobe for their bedroom. 
-            Each project is a new opportunity to create something meaningful.
+            Postoji nešto duboko zadovoljavajuće u transformaciji sirovog drveta u funkcionalno djelo 
+            umjetnosti. Radimo ovo jer volimo vidjeti radost na licima naših klijenata kada vide 
+            svoju prilagođenu kuhinju, trpezarijski sto iz snova, ili savršen ormar za njihovu spavaću sobu. 
+            Svaki projekat je nova prilika da se stvori nešto značajno.
           </p>
 
           {yearsInBusiness > 0 && (
             <p class="highlight-text">
-              With <strong>{yearsInBusiness} years of experience</strong>, we've completed hundreds 
-              of projects and built lasting relationships with clients who return to us time and again.
+              Sa <strong>{yearsInBusiness} godina iskustva</strong>, završili smo stotine 
+              projekata i izgradili trajne odnose sa klijentima koji nam se vraćaju iznova.
             </p>
           )}
         </div>
@@ -106,9 +105,9 @@ const yearsInBusiness = getYearsInBusiness();
   <section class="why-section">
     <div class="container">
       <header class="section-header">
-        <h2 class="section-title">Why Choose Us</h2>
+        <h2 class="section-title">Zašto Izabrati Nas</h2>
         <p class="section-subtitle">
-          What sets us apart from the competition
+          Šta nas razlikuje od konkurencije
         </p>
       </header>
 
@@ -116,60 +115,60 @@ const yearsInBusiness = getYearsInBusiness();
         <!-- Differentiator 1 -->
         <article class="differentiator-card">
           <div class="differentiator-number">01</div>
-          <h3 class="differentiator-title">Premium Quality Materials</h3>
+          <h3 class="differentiator-title">Premium Kvalitetni Materijali</h3>
           <p class="differentiator-text">
-            We source only the finest wood and materials from trusted suppliers. 
-            Every piece is carefully selected for durability, beauty, and sustainability.
+            Nabavljamo samo najkvalitetnije drvo i materijale od pouzdanih dobavljača. 
+            Svaki komad je pažljivo odabran za trajnost, ljepotu i održivost.
           </p>
           <ul class="differentiator-list">
-            <li>Solid hardwood construction</li>
-            <li>Premium hardware and fittings</li>
-            <li>Eco-friendly finishes</li>
+            <li>Konstrukcija od masivnog drveta</li>
+            <li>Premium okov i dodaci</li>
+            <li>Ekološki prihvatljive završne obrade</li>
           </ul>
         </article>
 
         <!-- Differentiator 2 -->
         <article class="differentiator-card">
           <div class="differentiator-number">02</div>
-          <h3 class="differentiator-title">100% Custom Design</h3>
+          <h3 class="differentiator-title">100% Prilagođeni Dizajn</h3>
           <p class="differentiator-text">
-            No templates, no compromises. Every piece is designed specifically for 
-            your space, your needs, and your style preferences.
+            Bez šablona, bez kompromisa. Svaki komad je dizajniran posebno za 
+            vaš prostor, vaše potrebe i vaše stilske preferencije.
           </p>
           <ul class="differentiator-list">
-            <li>Free design consultation</li>
-            <li>3D visualization available</li>
-            <li>Unlimited revisions</li>
+            <li>Besplatne dizajn konsultacije</li>
+            <li>3D vizualizacija dostupna</li>
+            <li>Neograničene revizije</li>
           </ul>
         </article>
 
         <!-- Differentiator 3 -->
         <article class="differentiator-card">
           <div class="differentiator-number">03</div>
-          <h3 class="differentiator-title">Expert Craftsmanship</h3>
+          <h3 class="differentiator-title">Stručna Izrada</h3>
           <p class="differentiator-text">
-            Our team of skilled craftsmen brings decades of combined experience 
-            to every project. Attention to detail is our signature.
+            Naš tim vještih zanatlija donosi decenije kombinovanog iskustva 
+            svakom projektu. Pažnja na detalje je naš potpis.
           </p>
           <ul class="differentiator-list">
-            <li>Handcrafted precision</li>
-            <li>Traditional joinery techniques</li>
-            <li>Quality control at every step</li>
+            <li>Ručno izrađena preciznost</li>
+            <li>Tradicionalne tehnike spajanja</li>
+            <li>Kontrola kvaliteta na svakom koraku</li>
           </ul>
         </article>
 
         <!-- Differentiator 4 -->
         <article class="differentiator-card">
           <div class="differentiator-number">04</div>
-          <h3 class="differentiator-title">Complete Service</h3>
+          <h3 class="differentiator-title">Kompletna Usluga</h3>
           <p class="differentiator-text">
-            From initial concept to final installation, we handle everything. 
-            Sit back and watch your vision become reality.
+            Od početnog koncepta do finalne instalacije, mi brinemo o svemu. 
+            Opustite se i gledajte kako vaša vizija postaje stvarnost.
           </p>
           <ul class="differentiator-list">
-            <li>Professional installation</li>
-            <li>Warranty included</li>
-            <li>After-sales support</li>
+            <li>Profesionalna instalacija</li>
+            <li>Garancija uključena</li>
+            <li>Postprodajna podrška</li>
           </ul>
         </article>
       </div>
@@ -183,10 +182,10 @@ const yearsInBusiness = getYearsInBusiness();
     <div class="container">
       <div class="location-content">
         <div class="location-info">
-          <h2 class="section-title">Visit Our Workshop</h2>
+          <h2 class="section-title">Posjetite Našu Radionicu</h2>
           <p class="location-text">
-            We welcome visitors to our workshop by appointment. Come see our craftsmen at work 
-            and discuss your project in person.
+            Radujemo se posjetiteljima u našoj radionici uz prethodni dogovor. Dođite vidjeti naše zanatlije na djelu 
+            i razgovarajte o vašem projektu uživo.
           </p>
           <address class="location-address">
             <span class="location-icon" aria-hidden="true">📍</span>
@@ -207,33 +206,33 @@ const yearsInBusiness = getYearsInBusiness();
   <section class="cta-section">
     <div class="container">
       <div class="cta-content">
-        <h2 class="cta-title">Ready to Start Your Project?</h2>
+        <h2 class="cta-title">Spremni da Započnete Vaš Projekat?</h2>
         <p class="cta-description">
-          Let's create something beautiful together. Contact us today for a free 
-          consultation and quote—no obligation, just great ideas.
+          Kreirajmo nešto lijepo zajedno. Kontaktirajte nas danas za besplatne 
+          konsultacije i ponudu—bez obaveza, samo sjajne ideje.
         </p>
 
         <div class="cta-buttons">
           <a 
-            href={getWhatsAppLink('Hello! I visited your About page and would like to discuss a project.')}
+            href={getWhatsAppLink('Zdravo! Posjetio sam vašu stranicu O Nama i želim razgovarati o projektu.')}
             target="_blank"
             rel="noopener noreferrer"
             class="btn btn-whatsapp"
           >
             <span class="btn-icon" aria-hidden="true">💬</span>
-            WhatsApp Us
+            WhatsApp
           </a>
 
           <a 
-            href={getEmailLink('Project Inquiry from About Page')}
+            href={getEmailLink('Upit za Projekat')}
             class="btn btn-email"
           >
             <span class="btn-icon" aria-hidden="true">✉️</span>
-            Email Us
+            Email
           </a>
 
           <a href="/contact" class="btn btn-outline">
-            Contact Page
+            Kontakt Stranica
           </a>
         </div>
       </div>
@@ -406,6 +405,7 @@ const yearsInBusiness = getYearsInBusiness();
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--space-32);
+    align-items: stretch;
   }
 
   @media (min-width: 768px) {
@@ -420,6 +420,11 @@ const yearsInBusiness = getYearsInBusiness();
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
     transition: all var(--transition-base);
+    /* Ensure all cards have same width and stretch to fill grid cell */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
   }
 
   .differentiator-card:hover {
@@ -448,6 +453,8 @@ const yearsInBusiness = getYearsInBusiness();
     color: var(--color-text-secondary);
     line-height: var(--line-height-relaxed);
     margin-bottom: var(--space-16);
+    /* Allow text to grow and push list to bottom */
+    flex-grow: 1;
   }
 
   .differentiator-list {

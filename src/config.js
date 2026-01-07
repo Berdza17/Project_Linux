@@ -17,48 +17,39 @@
 
 export const siteConfig = {
   /**
-   * COMPANY NAME
-   * This appears in the header, footer, page titles, and meta tags.
-   * Keep it concise and professional.
+   * NAZIV FIRME
+   * Pojavljuje se u zaglavlju, podnožju, naslovima stranica i meta tagovima.
    */
-  companyName: "Your Furniture Company",
+  companyName: "Vaša Firma za Namještaj",
 
   /**
-   * PHONE NUMBER
-   * Main contact phone number (displayed with formatting).
-   * Example: "+387 61 123 456" or "+387 33 123 456"
-   * This number will be shown on the website and made clickable on mobile devices.
+   * BROJ TELEFONA
+   * Glavni kontakt telefon (prikazan s formatiranjem).
    */
   phone: "+387 XX XXX XXXX",
 
   /**
-   * WHATSAPP NUMBER
-   * WhatsApp contact number for instant messaging.
+   * WHATSAPP BROJ
+   * WhatsApp kontakt broj za direktne poruke.
    * 
-   * IMPORTANT FORMAT:
-   * - Must include country code WITHOUT the + symbol
-   * - Remove all spaces, dashes, and parentheses
-   * - Example: "38761123456" (not "+387 61 123 456")
-   * 
-   * This creates a WhatsApp link like: https://wa.me/38761123456
-   * When clicked, opens WhatsApp chat with this number.
+   * VAŽAN FORMAT:
+   * - Mora uključivati pozivni broj države BEZ + simbola
+   * - Uklonite sve razmake, crtice i zagrade
+   * - Primjer: "38761123456" (ne "+387 61 123 456")
    */
   whatsappNumber: "38761123456",
 
   /**
-   * EMAIL ADDRESS
-   * Primary contact email for inquiries.
-   * This will be used in contact forms and mailto: links.
+   * EMAIL ADRESA
+   * Primarna kontakt email adresa za upite.
    */
-  email: "contact@yourcompany.com",
+  email: "kontakt@vasafirma.com",
 
   /**
-   * PHYSICAL ADDRESS
-   * Your business address (appears in footer and contact section).
-   * Can be full address or just city/region.
-   * Example: "Trg Fra Grge Martića 2, 71000 Sarajevo, BiH"
+   * FIZIČKA ADRESA
+   * Vaša poslovna adresa (pojavljuje se u podnožju i kontakt sekciji).
    */
-  address: "Sarajevo, Bosnia and Herzegovina",
+  address: "Sarajevo, Bosna i Hercegovina",
 
   /**
    * SOCIAL MEDIA LINKS
@@ -113,151 +104,66 @@ export const siteConfig = {
      * Describe what the logo shows.
      * Example: "Premium Wooden Furniture Company Logo"
      */
-    alt: "Your Furniture Company Logo",
+    alt: "Logo Vaše Firme za Namještaj",
   },
 
   /**
-   * HERO SECTION (Homepage banner)
-   * The large banner section at the top of your homepage.
+   * HERO SEKCIJA (Baner na početnoj stranici)
    */
   hero: {
-    /**
-     * Hero background image path (place file in /public folder).
-     * NOTE: Provide path WITHOUT file extension (e.g., "/images/hero" not "/images/hero.jpg")
-     * The LazyImage component will automatically use .webp and .jpg versions.
-     * 
-     * Recommended:
-     * - Format: WebP (with JPG fallback)
-     * - Dimensions: 1920x1080px (landscape)
-     * - File size: Under 500KB
-     * - Content: Your best furniture showcase photo
-     */
     image: "/images/hero",
-
-    /**
-     * Main hero headline
-     * The primary message visitors see first.
-     * Keep it short, impactful, and benefit-focused.
-     * Example: "Handcrafted Wooden Furniture for Your Home"
-     */
-    title: "Premium Wooden Furniture",
-
-    /**
-     * Hero subheading/tagline
-     * Secondary message that complements the title.
-     * Mention your product categories or unique selling point.
-     * Example: "Custom Kitchens • Dining Tables • TV Stands • Wardrobes"
-     */
-    tagline: "Kitchens, Tables, TV Stands, Wardrobes",
-
-    /**
-     * Call-to-action button text (optional)
-     * The text on the main action button in the hero.
-     * Example: "View Our Gallery" or "Get Free Quote"
-     */
-    ctaText: "View Our Work",
-
-    /**
-     * Call-to-action button link (optional)
-     * Where the CTA button should link to.
-     * Example: "/gallery" or "#contact"
-     */
+    title: "Premium Drveni Namještaj",
+    tagline: "Kuhinje, Stolovi, TV Komode, Ormari",
+    ctaText: "Pogledaj Naše Radove",
     ctaLink: "#gallery",
   },
 
   /**
-   * BUSINESS INFORMATION
-   * Additional business details for footer and about section.
+   * POSLOVNE INFORMACIJE
    */
   business: {
-    /**
-     * Business registration number (PIB, JIB, or similar)
-     * Optional - leave empty if you don't want to display it.
-     */
     registrationNumber: "",
-
-    /**
-     * Year business was established
-     * Example: 2010
-     * Used to show "Since 2010" or calculate years in business.
-     */
     establishedYear: 2024,
-
-    /**
-     * Business hours
-     * When customers can reach you or visit.
-     * Example: "Mon-Fri: 8:00-16:00, Sat: 9:00-13:00"
-     */
-    workingHours: "Mon-Fri: 8:00-17:00",
-
-    /**
-     * Short company description (for About section)
-     * 2-3 sentences about your company, values, or specialties.
-     */
+    workingHours: "Pon-Pet: 8:00-17:00",
     description:
-      "We create high-quality, custom wooden furniture for homes and businesses. With years of experience and attention to detail, we bring your vision to life.",
+      "Izrađujemo visokokvalitetni, prilagođeni drveni namještaj za domove i poslovne prostore. S godinama iskustva i pažnjom na detalje, oživljavamo vašu viziju.",
   },
 
   /**
-   * PRODUCT CATEGORIES
-   * Main furniture categories you offer.
-   * These will be displayed in the services/products section.
+   * KATEGORIJE PROIZVODA
    */
   categories: [
     {
-      name: "Kitchens",
-      description: "Custom kitchen cabinets and installations",
-      icon: "🏠", // You can replace with SVG icon path later
+      name: "Kuhinje",
+      description: "Prilagođeni kuhinjski elementi i instalacije",
+      icon: "🏠",
     },
     {
-      name: "Tables",
-      description: "Dining tables, coffee tables, and desks",
+      name: "Stolovi",
+      description: "Trpezarijski stolovi, stolići za kafu i radni stolovi",
       icon: "🪑",
     },
     {
-      name: "TV Stands",
-      description: "Modern entertainment centers and TV units",
+      name: "TV Komode",
+      description: "Moderni entertainment centri i TV jedinice",
       icon: "📺",
     },
     {
-      name: "Wardrobes",
-      description: "Built-in and standalone wardrobe solutions",
+      name: "Ormari",
+      description: "Ugradbeni i samostojeći ormari",
       icon: "🚪",
     },
   ],
 
   /**
-   * SEO SETTINGS
-   * Search engine optimization metadata.
+   * SEO POSTAVKE
    */
   seo: {
-    /**
-     * Default page title suffix
-     * Appears after the page title in browser tabs.
-     * Example: "Home | Your Furniture Company"
-     */
-    titleSuffix: " | Your Furniture Company",
-
-    /**
-     * Default meta description
-     * Short description for search engines (150-160 characters).
-     * Appears in Google search results.
-     */
+    titleSuffix: " | Vaša Firma za Namještaj",
     description:
-      "Custom wooden furniture manufacturer in Bosnia and Herzegovina. Specializing in kitchens, tables, TV stands, and wardrobes. Quality craftsmanship since 2024.",
-
-    /**
-     * Keywords for SEO (comma-separated)
-     * Relevant terms people might search for.
-     */
+      "Proizvodnja prilagođenog drvenog namještaja u Bosni i Hercegovini. Specijalizirani za kuhinje, stolove, TV komode i ormare. Kvalitetna izrada.",
     keywords:
-      "furniture, wooden furniture, custom furniture, kitchen cabinets, dining tables, wardrobes, TV stands, Sarajevo, Bosnia",
-
-    /**
-     * Open Graph image (for social media sharing)
-     * When someone shares your site on Facebook/LinkedIn.
-     * Should be 1200x630px, placed in /public folder.
-     */
+      "namještaj, drveni namještaj, prilagođeni namještaj, kuhinjski elementi, trpezarijski stolovi, ormari, TV komode, Sarajevo, Bosna",
     ogImage: "/og-image.jpg",
   },
 };

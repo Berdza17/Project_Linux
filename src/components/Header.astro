@@ -15,12 +15,12 @@ import { siteConfig } from '../config.js';
 // Get current page path for active link highlighting
 const currentPath = Astro.url.pathname;
 
-// Navigation links
+// Navigation links (Bosnian)
 const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/gallery', label: 'Gallery' },
-  { href: '/contact', label: 'Contact' },
-  { href: '/about', label: 'About' },
+  { href: '/', label: 'Početna' },
+  { href: '/gallery', label: 'Galerija' },
+  { href: '/contact', label: 'Kontakt' },
+  { href: '/about', label: 'O Nama' },
 ];
 ---
 
@@ -28,7 +28,7 @@ const navLinks = [
   <div class="container">
     <div class="header-content">
       <!-- Logo and Company Name -->
-      <a href="/" class="logo-link" aria-label="Go to homepage">
+      <a href="/" class="logo-link" aria-label="Idi na početnu stranicu">
         <img 
           src={siteConfig.logo.path} 
           alt={siteConfig.logo.alt} 
@@ -40,7 +40,7 @@ const navLinks = [
       </a>
 
       <!-- Desktop Navigation -->
-      <nav class="nav-desktop" aria-label="Main navigation">
+      <nav class="nav-desktop" aria-label="Glavna navigacija">
         <ul class="nav-list">
           {navLinks.map((link) => (
             <li class="nav-item">
@@ -59,7 +59,7 @@ const navLinks = [
       <!-- Mobile Hamburger Button -->
       <button 
         class="hamburger" 
-        aria-label="Toggle navigation menu"
+        aria-label="Otvori/Zatvori navigacijski meni"
         aria-expanded="false"
         aria-controls="mobile-menu"
       >
@@ -73,7 +73,7 @@ const navLinks = [
     <nav 
       class="nav-mobile" 
       id="mobile-menu"
-      aria-label="Mobile navigation"
+      aria-label="Mobilna navigacija"
     >
       <ul class="nav-mobile-list">
         {navLinks.map((link) => (
