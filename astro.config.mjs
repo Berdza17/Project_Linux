@@ -2,9 +2,11 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  // IMPORTANT: Update this with your actual domain before deploying
-  // Example: site: 'https://yourcompany.com',
-  // For local development, this can be undefined (fallbacks are in Layout.astro)
-  site: undefined,
+  // Your Netlify site URL (update after first deploy)
+  // Example: site: 'https://your-site-name.netlify.app',
+  site: 'https://project-linux.netlify.app',
+  
+  // Build output - static HTML (default for Netlify)
+  output: 'static',
 });
 
