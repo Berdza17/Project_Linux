@@ -257,7 +257,8 @@ const features = [
      ============================================ */
   .hero {
     position: relative;
-    min-height: 90vh;
+    height: 100vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -307,7 +308,7 @@ const features = [
     position: relative;
     z-index: 2;
     text-align: center;
-    color: white;
+    color: var(--color-text-light);
     padding: var(--space-32) 0;
   }
 
@@ -315,7 +316,7 @@ const features = [
     font-size: var(--font-size-3xl);
     font-weight: var(--font-weight-bold);
     margin-bottom: var(--space-16);
-    color: white;
+    color: var(--color-text-light);
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   }
 
@@ -374,7 +375,7 @@ const features = [
 
   .btn-primary {
     background-color: var(--color-primary);
-    color: white;
+    color: var(--color-text-light);
   }
 
   .btn-primary:hover {
@@ -385,15 +386,15 @@ const features = [
   }
 
   .btn-secondary {
-    background-color: white;
+    background-color: var(--color-bg);
     color: var(--color-primary);
-    border-color: white;
+    border-color: var(--color-bg);
   }
 
   .btn-secondary:hover {
     background-color: transparent;
-    color: white;
-    border-color: white;
+    color: var(--color-bg);
+    border-color: var(--color-bg);
     text-decoration: none;
   }
 
@@ -405,13 +406,13 @@ const features = [
 
   .btn-outline:hover {
     background-color: var(--color-primary);
-    color: white;
+    color: var(--color-text-light);
     text-decoration: none;
   }
 
   .btn-whatsapp {
     background-color: #25D366;
-    color: white;
+    color: var(--color-text-light);
   }
 
   .btn-whatsapp:hover {
@@ -423,7 +424,7 @@ const features = [
 
   .btn-email {
     background-color: var(--color-primary);
-    color: white;
+    color: var(--color-text-light);
   }
 
   .btn-email:hover {
@@ -435,7 +436,7 @@ const features = [
 
   .btn-phone {
     background-color: var(--color-accent);
-    color: white;
+    color: var(--color-text-light);
   }
 
   .btn-phone:hover {
@@ -566,7 +567,7 @@ const features = [
   }
 
   .product-overlay-text {
-    color: white;
+    color: var(--color-text-light);
     font-size: var(--font-size-lg);
     font-weight: var(--font-weight-semibold);
   }
@@ -659,10 +660,10 @@ const features = [
   .cta-section {
     background: linear-gradient(
       135deg,
-      var(--color-primary-dark) 0%,
-      var(--color-primary) 100%
+      var(--color-bg-tertiary) 0%,
+      var(--color-bg-secondary) 100%
     );
-    color: white;
+    color: var(--color-text-light);
   }
 
   .cta-content {
@@ -674,13 +675,13 @@ const features = [
   .cta-title {
     font-size: var(--font-size-3xl);
     margin-bottom: var(--space-16);
-    color: white;
+    color: var(--color-text);
   }
 
   .cta-description {
     font-size: var(--font-size-lg);
     margin-bottom: var(--space-32);
-    color: rgba(255, 255, 255, 0.95);
+    color: var(--color-text-secondary);
   }
 
   .cta-buttons {
@@ -693,7 +694,7 @@ const features = [
 
   .cta-info {
     font-size: var(--font-size-base);
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--color-text-secondary);
     margin: 0;
   }
 

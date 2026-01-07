@@ -300,6 +300,7 @@ const products = [
   .page-header {
     background-color: var(--color-bg-secondary);
     padding: var(--space-48) 0;
+    padding-top: calc(70px + var(--space-48)); /* Account for fixed header */
     text-align: center;
   }
 
@@ -375,7 +376,7 @@ const products = [
   }
 
   .filter-btn.active {
-    color: white;
+    color: var(--color-text-light);
     background-color: var(--color-primary);
     border-color: var(--color-primary);
   }
@@ -501,7 +502,7 @@ const products = [
 
   .gallery-zoom-icon {
     font-size: var(--font-size-4xl);
-    color: white;
+    color: var(--color-text-light);
     transform: scale(0.8);
     transition: transform var(--transition-base);
   }
@@ -600,7 +601,7 @@ const products = [
     height: 40px;
     background: none;
     border: none;
-    color: white;
+    color: var(--color-text-light);
     font-size: var(--font-size-2xl);
     cursor: pointer;
     display: flex;
@@ -636,7 +637,7 @@ const products = [
 
   .lightbox-caption {
     margin-top: var(--space-16);
-    color: white;
+    color: var(--color-text-light);
     font-size: var(--font-size-lg);
     text-align: center;
   }
@@ -645,22 +646,22 @@ const products = [
      CTA SECTION
      ============================================ */
   .gallery-cta {
-    background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+    background: linear-gradient(135deg, var(--color-bg-tertiary) 0%, var(--color-bg-secondary) 100%);
     padding: var(--space-64) 0;
     text-align: center;
-    color: white;
+    color: var(--color-text);
   }
 
   .gallery-cta .cta-title {
     font-size: var(--font-size-3xl);
     margin-bottom: var(--space-16);
-    color: white;
+    color: var(--color-text);
   }
 
   .gallery-cta .cta-description {
     font-size: var(--font-size-lg);
     margin-bottom: var(--space-32);
-    color: rgba(255, 255, 255, 0.95);
+    color: var(--color-text-secondary);
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
@@ -681,12 +682,12 @@ const products = [
   }
 
   .btn-primary {
-    background-color: white;
-    color: var(--color-primary);
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
   }
 
   .btn-primary:hover {
-    background-color: var(--color-bg-secondary);
+    background-color: var(--color-primary-dark);
     transform: translateY(-2px);
     box-shadow: var(--shadow-lg);
     text-decoration: none;

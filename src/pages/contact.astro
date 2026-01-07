@@ -272,6 +272,7 @@ const formName = 'contact-form'; // Used by Netlify Forms
   .page-header {
     background-color: var(--color-bg-secondary);
     padding: var(--space-48) 0;
+    padding-top: calc(70px + var(--space-48)); /* Account for fixed header */
     text-align: center;
   }
 
@@ -574,7 +575,7 @@ const formName = 'contact-form'; // Used by Netlify Forms
 
   .btn-primary {
     background-color: var(--color-primary);
-    color: white;
+    color: var(--color-text-light);
     border: none;
     width: 100%;
   }
@@ -587,7 +588,7 @@ const formName = 'contact-form'; // Used by Netlify Forms
 
   .btn-whatsapp {
     background-color: #25D366;
-    color: white;
+    color: var(--color-text-light);
   }
 
   .btn-whatsapp:hover {
@@ -599,7 +600,7 @@ const formName = 'contact-form'; // Used by Netlify Forms
 
   .btn-phone {
     background-color: var(--color-primary);
-    color: white;
+    color: var(--color-text-light);
   }
 
   .btn-phone:hover {
