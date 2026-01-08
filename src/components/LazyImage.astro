@@ -48,9 +48,9 @@ const fallbackSrc = src.endsWith('.jpg') || src.endsWith('.png') ? src : `${src}
 const srcBase = src.replace(/\.(webp|jpg|png)$/, '');
 
 // Simple srcset (just the single image - no @2x requirement)
-// If you add @2x files later, uncomment the 2x versions below
+// Use webp as primary and fallback to webp if no jpg exists
 const webpSrcset = `${srcBase}.webp`;
-const fallbackSrcset = `${srcBase}.jpg`;
+const fallbackSrcset = `${srcBase}.webp`; // Use webp as fallback too for compatibility
 
 // Optional: Uncomment these lines if you have @2x versions of your images:
 // const webpSrcset = `${srcBase}.webp 1x, ${srcBase}@2x.webp 2x`;
@@ -70,15 +70,9 @@ const imageId = `img-${Math.random().toString(36).substr(2, 9)}`;
     type="image/webp"
   />
   
-  <!-- Fallback source (older browsers) -->
-  <source 
-    srcset={fallbackSrcset}
-    type="image/jpeg"
-  />
-  
-  <!-- Main image element -->
+  <!-- Main image element - use webp directly since all modern browsers support it -->
   <img
-    src={fallbackSrc}
+    src={webpSrc}
     alt={alt}
     width={width}
     height={height}
