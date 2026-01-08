@@ -55,20 +55,8 @@ const loadingAttr = eager ? 'eager' : 'lazy';
 const imageId = `img-${Math.random().toString(36).substr(2, 9)}`;
 ---
 
-<picture class={`lazy-image-wrapper ${className}`} data-image-id={imageId}>
-  <!-- WebP source for browsers that support it -->
-  <source 
-    srcset={webpSrc}
-    type="image/webp"
-  />
-  
-  <!-- JPG source as fallback -->
-  <source 
-    srcset={jpgSrc}
-    type="image/jpeg"
-  />
-  
-  <!-- Main image element - use JPG as default -->
+<div class={`lazy-image-wrapper ${className}`} data-image-id={imageId}>
+  <!-- Use JPG only since WebP has issues on Netlify -->
   <img
     src={jpgSrc}
     alt={alt}
@@ -84,7 +72,7 @@ const imageId = `img-${Math.random().toString(36).substr(2, 9)}`;
   {!eager && (
     <div class="lazy-image-placeholder" aria-hidden="true"></div>
   )}
-</picture>
+</div>
 
 <style>
   /* ============================================
