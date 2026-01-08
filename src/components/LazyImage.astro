@@ -39,9 +39,8 @@ const {
   eager = false 
 } = Astro.props;
 
-// Generate image paths - use JPG as primary since WebP has issues on Netlify
+// Generate image paths - use WebP as primary (works on Cloudflare)
 const srcBase = src.replace(/\.(webp|jpg|png)$/, '');
-const jpgSrc = `${srcBase}.jpg`;
 const webpSrc = `${srcBase}.webp`;
 
 // Optional: Uncomment these lines if you have @2x versions of your images:
@@ -56,9 +55,9 @@ const imageId = `img-${Math.random().toString(36).substr(2, 9)}`;
 ---
 
 <div class={`lazy-image-wrapper ${className}`} data-image-id={imageId}>
-  <!-- Use JPG only since WebP has issues on Netlify -->
+  <!-- Use WebP (works on Cloudflare) -->
   <img
-    src={jpgSrc}
+    src={webpSrc}
     alt={alt}
     width={width}
     height={height}
