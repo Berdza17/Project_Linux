@@ -63,22 +63,22 @@ const featuredProducts = [
 // Zašto izabrati nas
 const features = [
   {
-    icon: '🌳',
+    icon: '/images/wood-svgrepo-com.svg',
     title: 'Premium Materijali',
     description: 'Koristimo samo najkvalitetnije drvo i materijale, osiguravajući trajnost i bezvremensku ljepotu u svakom komadu.'
   },
   {
-    icon: '✨',
+    icon: '/images/design-education-learning-svgrepo-com.svg',
     title: 'Prilagođeni Dizajn',
     description: 'Svaki projekat je prilagođen vašim tačnim specifikacijama, prostoru i stilskim preferencijama.'
   },
   {
-    icon: '🔨',
+    icon: '/images/measuring-measurement-svgrepo-com.svg',
     title: 'Stručna Izrada',
     description: 'Godine iskustva i pažnja na detalje u svakom rezu, spoju i završnoj obradi.'
   },
   {
-    icon: '💯',
+    icon: '/images/quality-medal-svgrepo-com.svg',
     title: 'Garancija Kvaliteta',
     description: 'Stojimo iza našeg rada sa sveobuhvatnim garancijama i odličnom postprodajnom podrškom.'
   }
@@ -190,7 +190,9 @@ const features = [
       <div class="features-grid">
         {features.map((feature) => (
           <article class="feature-card">
-            <div class="feature-icon" aria-hidden="true">{feature.icon}</div>
+            <div class="feature-icon" aria-hidden="true">
+              <img src={feature.icon} alt="" class="feature-icon-img" />
+            </div>
             <h3 class="feature-title">{feature.title}</h3>
             <p class="feature-description">{feature.description}</p>
           </article>
@@ -623,21 +625,37 @@ const features = [
   .feature-card {
     text-align: center;
     padding: var(--space-32);
-    background-color: var(--color-bg-secondary);
+    background-color: #E5D4C0;
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.08);
     transition: all var(--transition-base);
   }
 
+  :root[data-theme="dark"] .feature-card {
+    background-color: var(--color-bg-tertiary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
   .feature-card:hover {
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1);
     transform: translateY(-4px);
   }
 
+  :root[data-theme="dark"] .feature-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
   .feature-icon {
-    font-size: var(--font-size-6xl);
     margin-bottom: var(--space-16);
-    line-height: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .feature-icon-img {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
   }
 
   .feature-title {

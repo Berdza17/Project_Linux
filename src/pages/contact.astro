@@ -253,13 +253,21 @@ const formName = 'contact-form'; // Used by Netlify Forms
     </div>
   </section>
 
-  <!-- Map Section (Optional - placeholder) -->
+  <!-- Map Section -->
   <section class="map-section">
     <div class="container">
-      <div class="map-placeholder">
-        <span class="map-icon" aria-hidden="true">🗺️</span>
-        <p>Mapa bi bila ovdje</p>
-        <p class="map-note">Dodajte Google Maps embed ili statičnu sliku mape</p>
+      <h2 class="map-title">Pronađite Nas</h2>
+      <div class="map-wrapper">
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d322.7842141222302!2d18.254361758294234!3d43.83819397637586!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sba!4v1767865007296!5m2!1sen!2sba" 
+          width="100%" 
+          height="450" 
+          style="border:0;" 
+          allowfullscreen="" 
+          loading="lazy" 
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Lokacija na mapi"
+        ></iframe>
       </div>
     </div>
   </section>
@@ -620,30 +628,32 @@ const formName = 'contact-form'; // Used by Netlify Forms
      ============================================ */
   .map-section {
     padding: var(--space-48) 0 var(--space-64);
-    background-color: var(--color-bg);
-  }
-
-  .map-placeholder {
     background-color: var(--color-bg-secondary);
-    border-radius: var(--radius-lg);
-    height: 300px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  }
+
+  .map-title {
     text-align: center;
-    color: var(--color-text-muted);
+    font-size: var(--font-size-3xl);
+    color: var(--color-text);
+    margin-bottom: var(--space-32);
   }
 
-  .map-icon {
-    font-size: var(--font-size-6xl);
-    margin-bottom: var(--space-16);
-    opacity: 0.5;
+  .map-wrapper {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   }
 
-  .map-note {
-    font-size: var(--font-size-sm);
-    margin-top: var(--space-8);
+  .map-wrapper iframe {
+    display: block;
+    width: 100%;
+    height: 350px;
+  }
+
+  @media (min-width: 768px) {
+    .map-wrapper iframe {
+      height: 450px;
+    }
   }
 
   /* ============================================
