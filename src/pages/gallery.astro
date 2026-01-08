@@ -24,161 +24,98 @@ const categories = [
   { id: 'wardrobes', label: 'Ormari' },
 ];
 
-// Podaci o proizvodima
+// Podaci o proizvodima (samo proizvodi sa slikama)
 const products = [
-  // Kuhinje (5 items)
+  // Kuhinje
   {
     id: 1,
-    title: 'Moderna Bijela Kuhinja',
+    title: 'Moderna Kuhinja',
     category: 'kitchens',
     image: '/images/gallery/kitchen-1',
-    alt: 'Moderna bijela kuhinja sa drvenim detaljima'
+    alt: 'Moderna kuhinja'
   },
   {
     id: 2,
-    title: 'Klasična Hrastova Kuhinja',
+    title: 'Klasična Kuhinja',
     category: 'kitchens',
     image: '/images/gallery/kitchen-2',
-    alt: 'Klasični hrastovi kuhinjski elementi'
+    alt: 'Klasična kuhinja'
   },
   {
     id: 3,
-    title: 'Minimalistički Dizajn Kuhinje',
+    title: 'Minimalistička Kuhinja',
     category: 'kitchens',
     image: '/images/gallery/kitchen-3',
-    alt: 'Minimalistička kuhinja sa čistim linijama'
+    alt: 'Minimalistička kuhinja'
   },
+
+  // Stolovi
   {
     id: 4,
-    title: 'Rustična Kuhinja',
-    category: 'kitchens',
-    image: '/images/gallery/kitchen-4',
-    alt: 'Rustična kuhinja u seoskom stilu'
+    title: 'Moderni Sto',
+    category: 'tables',
+    image: '/images/gallery/table-1',
+    alt: 'Moderni sto'
   },
   {
     id: 5,
-    title: 'Savremena Kuhinja',
-    category: 'kitchens',
-    image: '/images/gallery/kitchen-5',
-    alt: 'Savremena kuhinja sa ostrvom'
-  },
-
-  // Stolovi (5 items)
-  {
-    id: 6,
-    title: 'Hrastov Trpezarijski Sto',
-    category: 'tables',
-    image: '/images/gallery/table-1',
-    alt: 'Masivni hrastov trpezarijski sto za 8 osoba'
-  },
-  {
-    id: 7,
-    title: 'Set Stolića za Kafu',
+    title: 'Klasični Sto',
     category: 'tables',
     image: '/images/gallery/table-2',
-    alt: 'Drveni set stolića za kafu'
+    alt: 'Klasični sto'
+  },
+  {
+    id: 6,
+    title: 'Elegantni Sto',
+    category: 'tables',
+    image: '/images/gallery/table-3',
+    alt: 'Elegantni sto'
+  },
+
+  // TV Komode
+  {
+    id: 7,
+    title: 'Moderna TV Komoda',
+    category: 'tv-stands',
+    image: '/images/gallery/tv-stand-1',
+    alt: 'Moderna TV komoda'
   },
   {
     id: 8,
-    title: 'Rastegljivi Trpezarijski Sto',
-    category: 'tables',
-    image: '/images/gallery/table-3',
-    alt: 'Rastegljivi trpezarijski sto od oraha'
+    title: 'Klasična TV Komoda',
+    category: 'tv-stands',
+    image: '/images/gallery/tv-stand-2',
+    alt: 'Klasična TV komoda'
   },
   {
     id: 9,
-    title: 'Okrugli Stolić za Kafu',
-    category: 'tables',
-    image: '/images/gallery/table-4',
-    alt: 'Okrugli drveni stolić za kafu'
-  },
-  {
-    id: 10,
-    title: 'Konzolni Sto',
-    category: 'tables',
-    image: '/images/gallery/table-5',
-    alt: 'Konzolni sto za hodnik'
-  },
-
-  // TV Komode (5 items)
-  {
-    id: 11,
-    title: 'Viseća TV Komoda',
-    category: 'tv-stands',
-    image: '/images/gallery/tv-stand-1',
-    alt: 'Viseća TV komoda sa LED osvjetljenjem'
-  },
-  {
-    id: 12,
-    title: 'Entertainment Centar',
-    category: 'tv-stands',
-    image: '/images/gallery/tv-stand-2',
-    alt: 'Entertainment centar za cijeli zid'
-  },
-  {
-    id: 13,
     title: 'Minimalistička TV Komoda',
     category: 'tv-stands',
     image: '/images/gallery/tv-stand-3',
-    alt: 'Minimalistička niska TV komoda'
-  },
-  {
-    id: 14,
-    title: 'Ugaona TV Komoda',
-    category: 'tv-stands',
-    image: '/images/gallery/tv-stand-4',
-    alt: 'Ugaona TV komoda sa prostorom za odlaganje'
-  },
-  {
-    id: 15,
-    title: 'Moderna Medijska Konzola',
-    category: 'tv-stands',
-    image: '/images/gallery/tv-stand-5',
-    alt: 'Moderna medijska konzola od hrasta'
+    alt: 'Minimalistička TV komoda'
   },
 
-  // Ormari (6 items)
+  // Ormari
   {
-    id: 16,
-    title: 'Garderober',
+    id: 10,
+    title: 'Moderni Ormar',
     category: 'wardrobes',
     image: '/images/gallery/wardrobe-1',
-    alt: 'Prilagođeni garderober'
+    alt: 'Moderni ormar'
   },
   {
-    id: 17,
-    title: 'Ormar sa Kliznim Vratima',
-    category: 'wardrobes',
-    image: '/images/gallery/wardrobe-2',
-    alt: 'Ormar sa kliznim vratima i ogledalom'
-  },
-  {
-    id: 18,
-    title: 'Ugradbeni Plakar',
-    category: 'wardrobes',
-    image: '/images/gallery/wardrobe-3',
-    alt: 'Ugradbeni sistem za organizaciju'
-  },
-  {
-    id: 19,
+    id: 11,
     title: 'Klasični Ormar',
     category: 'wardrobes',
-    image: '/images/gallery/wardrobe-4',
-    alt: 'Klasični drveni ormar'
+    image: '/images/gallery/wardrobe-2',
+    alt: 'Klasični ormar'
   },
   {
-    id: 20,
-    title: 'Spavaći Set Ormara',
+    id: 12,
+    title: 'Elegantni Ormar',
     category: 'wardrobes',
-    image: '/images/gallery/wardrobe-5',
-    alt: 'Kompletan set ormara za spavaću sobu'
-  },
-  {
-    id: 21,
-    title: 'Otvoreni Plakar',
-    category: 'wardrobes',
-    image: '/images/gallery/wardrobe-6',
-    alt: 'Dizajn otvorenog plakara'
+    image: '/images/gallery/wardrobe-3',
+    alt: 'Elegantni ormar'
   },
 ];
 ---
