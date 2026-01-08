@@ -39,18 +39,10 @@ const {
   eager = false 
 } = Astro.props;
 
-// Generate WebP and fallback image paths
-// Assumes images are stored as both .webp and .jpg/.png
-const webpSrc = src.endsWith('.webp') ? src : `${src}.webp`;
-const fallbackSrc = src.endsWith('.jpg') || src.endsWith('.png') ? src : `${src}.jpg`;
-
-// Generate base path without extension
+// Generate image paths - use JPG as primary since WebP has issues on Netlify
 const srcBase = src.replace(/\.(webp|jpg|png)$/, '');
-
-// Simple srcset (just the single image - no @2x requirement)
-// Use webp as primary and fallback to webp if no jpg exists
-const webpSrcset = `${srcBase}.webp`;
-const fallbackSrcset = `${srcBase}.webp`; // Use webp as fallback too for compatibility
+const jpgSrc = `${srcBase}.jpg`;
+const webpSrc = `${srcBase}.webp`;
 
 // Optional: Uncomment these lines if you have @2x versions of your images:
 // const webpSrcset = `${srcBase}.webp 1x, ${srcBase}@2x.webp 2x`;
@@ -64,15 +56,21 @@ const imageId = `img-${Math.random().toString(36).substr(2, 9)}`;
 ---
 
 <picture class={`lazy-image-wrapper ${className}`} data-image-id={imageId}>
-  <!-- WebP source (modern browsers) -->
+  <!-- WebP source for browsers that support it -->
   <source 
-    srcset={webpSrcset}
+    srcset={webpSrc}
     type="image/webp"
   />
   
-  <!-- Main image element - use webp directly since all modern browsers support it -->
+  <!-- JPG source as fallback -->
+  <source 
+    srcset={jpgSrc}
+    type="image/jpeg"
+  />
+  
+  <!-- Main image element - use JPG as default -->
   <img
-    src={webpSrc}
+    src={jpgSrc}
     alt={alt}
     width={width}
     height={height}
