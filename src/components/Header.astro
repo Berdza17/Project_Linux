@@ -15,6 +15,9 @@ import { siteConfig } from '../config.js';
 // Get current page path for active link highlighting
 const currentPath = Astro.url.pathname;
 
+// Check if we're on the homepage (for transparent header)
+const isHomepage = currentPath === '/' || currentPath === '';
+
 // Navigation links (Bosnian)
 const navLinks = [
   { href: '/', label: 'Početna' },
@@ -24,7 +27,7 @@ const navLinks = [
 ];
 ---
 
-<header class="header">
+<header class={`header ${isHomepage ? 'header-transparent' : 'header-solid'}`}
   <div class="container">
     <div class="header-content">
       <!-- Logo and Company Name -->
@@ -55,6 +58,24 @@ const navLinks = [
           ))}
         </ul>
       </nav>
+
+      <!-- Theme Toggle Switch (Desktop only) -->
+      <button 
+        class="theme-toggle theme-toggle-desktop" 
+        id="theme-toggle"
+        aria-label="Promijeni temu"
+        title="Promijeni temu"
+        role="switch"
+        aria-checked="false"
+      >
+        <span class="toggle-track">
+          <span class="toggle-thumb"></span>
+        </span>
+        <span class="toggle-icons">
+          <span class="toggle-icon-sun">☀️</span>
+          <span class="toggle-icon-moon">🌙</span>
+        </span>
+      </button>
 
       <!-- Mobile Hamburger Button -->
       <button 
@@ -88,6 +109,26 @@ const navLinks = [
           </li>
         ))}
       </ul>
+      
+      <!-- Theme Toggle (Mobile) -->
+      <div class="mobile-theme-toggle">
+        <span class="mobile-theme-label">Tema:</span>
+        <button 
+          class="theme-toggle theme-toggle-mobile" 
+          id="theme-toggle-mobile"
+          aria-label="Promijeni temu"
+          role="switch"
+          aria-checked="false"
+        >
+          <span class="toggle-track">
+            <span class="toggle-thumb"></span>
+          </span>
+          <span class="toggle-icons">
+            <span class="toggle-icon-sun">☀️</span>
+            <span class="toggle-icon-moon">🌙</span>
+          </span>
+        </button>
+      </div>
     </nav>
   </div>
 </header>
@@ -97,17 +138,29 @@ const navLinks = [
      HEADER CONTAINER
      ============================================ */
   .header {
-    background-color: transparent;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    z-index: var(--z-sticky);
+    z-index: 9999;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
   }
 
-  /* Add background when scrolled */
-  .header.scrolled {
+  /* Solid header (default for all pages except homepage) */
+  .header-solid {
+    background-color: var(--color-bg);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* Transparent header (homepage only) */
+  .header-transparent {
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  /* Make header solid when scrolled OR when mobile menu is open */
+  .header-transparent.scrolled,
+  .header-transparent.menu-open {
     background-color: var(--color-bg);
     box-shadow: var(--shadow-sm);
   }
@@ -116,8 +169,16 @@ const navLinks = [
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--space-16) 0;
-    min-height: 70px;
+    padding: 0;
+    height: 50px;
+  }
+
+  @media (min-width: 768px) {
+    .header-content {
+      padding: var(--space-8) 0;
+      height: auto;
+      min-height: 60px;
+    }
   }
 
   /* ============================================
@@ -158,8 +219,8 @@ const navLinks = [
     transition: color 0.3s ease;
   }
 
-  /* Light text when header is transparent (over hero) */
-  .header:not(.scrolled) .company-name {
+  /* Light text when header is transparent (over hero - homepage only) */
+  .header-transparent:not(.scrolled):not(.menu-open) .company-name {
     color: var(--color-text-light);
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   }
@@ -201,28 +262,14 @@ const navLinks = [
     transition: color 0.3s ease;
   }
 
-  /* Light text when header is transparent (over hero) */
-  .header:not(.scrolled) .nav-link {
-    color: var(--color-text-light);
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  }
-
   .nav-link:hover {
     color: var(--color-primary);
     text-decoration: none;
   }
 
-  .header:not(.scrolled) .nav-link:hover {
-    color: var(--color-bg-secondary);
-  }
-
   /* Active link underline */
   .nav-link.active {
     color: var(--color-primary);
-  }
-
-  .header:not(.scrolled) .nav-link.active {
-    color: var(--color-bg-secondary);
   }
 
   .nav-link.active::after {
@@ -235,8 +282,175 @@ const navLinks = [
     background-color: var(--color-primary);
   }
 
-  .header:not(.scrolled) .nav-link.active::after {
-    background-color: var(--color-bg-secondary);
+  /* Light text when header is transparent (desktop only - nav links not visible on mobile) */
+  @media (min-width: 768px) {
+    .header-transparent:not(.scrolled):not(.menu-open) .nav-link {
+      color: var(--color-text-light);
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .header-transparent:not(.scrolled):not(.menu-open) .nav-link:hover {
+      color: var(--color-bg-secondary);
+    }
+
+    .header-transparent:not(.scrolled):not(.menu-open) .nav-link.active {
+      color: var(--color-text-light);
+    }
+
+    .header-transparent:not(.scrolled):not(.menu-open) .nav-link.active::after {
+      background-color: var(--color-text-light);
+    }
+  }
+
+  /* ============================================
+     THEME TOGGLE SWITCH
+     ============================================ */
+  .theme-toggle {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 60px;
+    height: 30px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  /* Desktop toggle - hidden on mobile */
+  .theme-toggle-desktop {
+    display: none;
+    margin-right: var(--space-8);
+  }
+
+  @media (min-width: 768px) {
+    .theme-toggle-desktop {
+      display: flex;
+    }
+  }
+
+  /* Mobile toggle in dropdown */
+  .mobile-theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-12);
+    padding: var(--space-4) var(--space-16);
+    margin-top: 0;
+  }
+
+  .mobile-theme-label {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+  }
+
+  .theme-toggle-mobile {
+    display: flex;
+  }
+
+  .theme-toggle:focus {
+    outline: none;
+  }
+
+  .theme-toggle:focus .toggle-track {
+    box-shadow: 0 0 0 2px var(--color-primary);
+  }
+
+  /* The track (background bar) */
+  .toggle-track {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--color-bg-tertiary);
+    border-radius: 15px;
+    border: 2px solid var(--color-border);
+    transition: background 0.3s ease, border-color 0.3s ease;
+  }
+
+  .theme-toggle:hover .toggle-track {
+    border-color: var(--color-primary);
+  }
+
+  /* The sliding thumb */
+  .toggle-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 22px;
+    height: 22px;
+    background: var(--color-primary);
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Icons container */
+  .toggle-icons {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 6px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .toggle-icon-sun,
+  .toggle-icon-moon {
+    font-size: 0.75rem;
+    transition: opacity 0.3s ease;
+  }
+
+  /* Light mode: sun bright, moon dim */
+  .toggle-icon-sun {
+    opacity: 1;
+  }
+
+  .toggle-icon-moon {
+    opacity: 0.4;
+  }
+
+  /* Dark theme styles */
+  :root[data-theme="dark"] .toggle-track {
+    background: #2a2a3a;
+    border-color: #3a3a4a;
+  }
+
+  :root[data-theme="dark"] .toggle-thumb {
+    transform: translateX(32px);
+    background: #6a6a8a;
+  }
+
+  :root[data-theme="dark"] .toggle-icon-sun {
+    opacity: 0.4;
+  }
+
+  :root[data-theme="dark"] .toggle-icon-moon {
+    opacity: 1;
+  }
+
+  /* Transparent header styling - Light mode (desktop only) */
+  @media (min-width: 768px) {
+    .header-transparent:not(.scrolled):not(.menu-open) .toggle-track {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .header-transparent:not(.scrolled):not(.menu-open) .toggle-thumb {
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .header-transparent:not(.scrolled):not(.menu-open) .theme-toggle:hover .toggle-track {
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* Transparent header styling - Dark mode (override) */
+    :root[data-theme="dark"] .header-transparent:not(.scrolled):not(.menu-open) .toggle-thumb {
+      transform: translateX(32px);
+      background: #6a6a8a;
+    }
   }
 
   /* ============================================
@@ -252,6 +466,7 @@ const navLinks = [
     border: none;
     cursor: pointer;
     padding: 0;
+    margin-right: var(--space-8);
     z-index: var(--z-sticky);
   }
 
@@ -269,8 +484,8 @@ const navLinks = [
     transition: all var(--transition-base);
   }
 
-  /* Light hamburger lines when header is transparent */
-  .header:not(.scrolled) .hamburger-line {
+  /* White hamburger lines when header is transparent and menu is closed */
+  .header-transparent:not(.scrolled):not(.menu-open) .hamburger-line {
     background-color: var(--color-text-light);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   }
@@ -299,13 +514,13 @@ const navLinks = [
   }
 
   .nav-mobile.open {
-    max-height: 400px; /* Adjust based on content */
+    max-height: 350px; /* Ensure theme toggle is visible */
   }
 
   .nav-mobile-list {
     list-style: none;
     margin: 0;
-    padding: var(--space-16) 0;
+    padding: var(--space-8) 0;
   }
 
   .nav-mobile-item {
@@ -314,8 +529,8 @@ const navLinks = [
 
   .nav-mobile-link {
     display: block;
-    padding: var(--space-12) var(--space-8);
-    font-size: var(--font-size-lg);
+    padding: var(--space-8) var(--space-8);
+    font-size: var(--font-size-base);
     font-weight: var(--font-weight-medium);
     color: var(--color-text);
     text-decoration: none;
@@ -393,6 +608,9 @@ const navLinks = [
     // Toggle 'open' class on mobile menu (for sliding)
     mobileMenu?.classList.toggle('open');
     
+    // Toggle 'menu-open' class on header (to make it solid when menu is open)
+    header?.classList.toggle('menu-open');
+    
     // Update aria-expanded attribute for accessibility
     const isExpanded = hamburger?.getAttribute('aria-expanded') === 'true';
     hamburger?.setAttribute('aria-expanded', String(!isExpanded));
@@ -404,6 +622,7 @@ const navLinks = [
   function closeMenu() {
     hamburger?.classList.remove('active');
     mobileMenu?.classList.remove('open');
+    header?.classList.remove('menu-open');
     hamburger?.setAttribute('aria-expanded', 'false');
   }
 
@@ -461,5 +680,46 @@ const navLinks = [
 
   // Listen for scroll events
   window.addEventListener('scroll', handleScroll, { passive: true });
+
+  // ============================================
+  // THEME TOGGLE - Light/Dark mode switching
+  // ============================================
+  const themeToggleDesktop = document.getElementById('theme-toggle');
+  const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+  const html = document.documentElement;
+  
+  // Get saved theme or default to light
+  function getStoredTheme(): string {
+    return localStorage.getItem('theme') || 'light';
+  }
+  
+  // Apply theme to document
+  function applyTheme(theme: string) {
+    if (theme === 'dark') {
+      html.setAttribute('data-theme', 'dark');
+      themeToggleDesktop?.setAttribute('aria-checked', 'true');
+      themeToggleMobile?.setAttribute('aria-checked', 'true');
+    } else {
+      html.removeAttribute('data-theme');
+      themeToggleDesktop?.setAttribute('aria-checked', 'false');
+      themeToggleMobile?.setAttribute('aria-checked', 'false');
+    }
+  }
+  
+  // Toggle theme
+  function toggleTheme() {
+    const currentTheme = html.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    applyTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+  }
+  
+  // Apply saved theme on page load
+  applyTheme(getStoredTheme());
+  
+  // Listen for theme toggle clicks (both desktop and mobile)
+  themeToggleDesktop?.addEventListener('click', toggleTheme);
+  themeToggleMobile?.addEventListener('click', toggleTheme);
 </script>
 

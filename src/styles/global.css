@@ -131,9 +131,27 @@
 }
 
 /* ============================================
-   DARK MODE - Disabled (using warm beige palette only)
+   DARK MODE - Toggle via data-theme attribute
    ============================================ */
-/* Dark mode is disabled - site always uses warm beige palette */
+[data-theme="dark"] {
+  --color-primary: #C9A87C;
+  --color-primary-light: #D4B88C;
+  --color-primary-dark: #A08060;
+  --color-accent: #B89070;
+  
+  --color-bg: #1A1612;
+  --color-bg-secondary: #2D261E;
+  --color-bg-tertiary: #3A3128;
+  --color-text: #F5EDE5;
+  --color-text-secondary: #C5B8A8;
+  --color-text-muted: #8A7D70;
+  --color-text-light: #F5EDE5;
+  
+  --color-border: #443A30;
+  --color-border-light: #3A3128;
+  --color-shadow: rgba(0, 0, 0, 0.4);
+  --color-overlay: rgba(0, 0, 0, 0.7);
+}
 
 /* ============================================
    RESET & BASE STYLES

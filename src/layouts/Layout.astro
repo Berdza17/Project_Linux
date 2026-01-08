@@ -38,6 +38,16 @@ const ogImageURL = Astro.site
 <!DOCTYPE html>
 <html lang="bs">
 <head>
+  <!-- Theme initialization (prevents flash of wrong theme) -->
+  <script is:inline>
+    (function() {
+      const theme = localStorage.getItem('theme') || 'light';
+      if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  
   <!-- Character encoding -->
   <meta charset="UTF-8" />
   

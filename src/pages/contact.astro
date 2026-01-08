@@ -272,7 +272,7 @@ const formName = 'contact-form'; // Used by Netlify Forms
   .page-header {
     background-color: var(--color-bg-secondary);
     padding: var(--space-48) 0;
-    padding-top: calc(70px + var(--space-48)); /* Account for fixed header */
+    padding-top: calc(50px + var(--space-32)); /* Account for fixed header on mobile */
     text-align: center;
   }
 
@@ -292,6 +292,7 @@ const formName = 'contact-form'; // Used by Netlify Forms
   @media (min-width: 768px) {
     .page-header {
       padding: var(--space-64) 0;
+      padding-top: calc(60px + var(--space-48)); /* Account for fixed header on desktop */
     }
     .page-title {
       font-size: var(--font-size-5xl);

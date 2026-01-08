@@ -300,7 +300,7 @@ const products = [
   .page-header {
     background-color: var(--color-bg-secondary);
     padding: var(--space-48) 0;
-    padding-top: calc(70px + var(--space-48)); /* Account for fixed header */
+    padding-top: calc(50px + var(--space-32)); /* Account for fixed header on mobile */
     text-align: center;
   }
 
@@ -320,6 +320,7 @@ const products = [
   @media (min-width: 768px) {
     .page-header {
       padding: var(--space-64) 0;
+      padding-top: calc(60px + var(--space-48)); /* Account for fixed header on desktop */
     }
     .page-title {
       font-size: var(--font-size-5xl);
@@ -330,39 +331,32 @@ const products = [
      FILTER BUTTONS
      ============================================ */
   .filter-section {
-    padding: var(--space-32) 0;
+    padding: var(--space-12) 0;
     background-color: var(--color-bg);
     position: sticky;
-    top: 70px; /* Below header */
-    z-index: var(--z-sticky);
+    top: 50px; /* Below header on mobile */
+    z-index: 100;
     border-bottom: var(--border-width) var(--border-style) var(--color-border);
   }
 
+
   .filter-buttons {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: var(--space-8);
-    overflow-x: auto;
-    padding-bottom: var(--space-8);
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; /* Firefox */
-  }
-
-  .filter-buttons::-webkit-scrollbar {
-    display: none; /* Chrome, Safari */
   }
 
   .filter-btn {
-    flex-shrink: 0;
-    padding: var(--space-12) var(--space-24);
-    font-size: var(--font-size-base);
+    padding: var(--space-8) var(--space-12);
+    font-size: var(--font-size-sm);
     font-weight: var(--font-weight-medium);
     color: var(--color-text-secondary);
     background-color: var(--color-bg-secondary);
-    border: var(--border-width-2) solid transparent;
+    border: var(--border-width) solid transparent;
     border-radius: var(--radius-full);
     cursor: pointer;
     transition: all var(--transition-fast);
-    white-space: nowrap;
   }
 
   .filter-btn:hover {
@@ -382,9 +376,18 @@ const products = [
   }
 
   @media (min-width: 768px) {
+    .filter-section {
+      padding: var(--space-24) 0;
+      top: 60px; /* Below header on desktop */
+    }
+
     .filter-buttons {
-      justify-content: center;
-      flex-wrap: wrap;
+      gap: var(--space-8);
+    }
+
+    .filter-btn {
+      padding: var(--space-8) var(--space-16);
+      font-size: var(--font-size-sm);
     }
   }
 
